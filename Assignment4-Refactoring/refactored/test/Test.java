@@ -43,7 +43,6 @@ public class Test {
 	@org.junit.Test
 	public void testGetFirstLockedRoom() throws UnknowRoomTypeException{
 		ArrayList<Room> list = new ArrayList<Room>();
-		ArrayList<Room> connected = new ArrayList<Room>();
 		
 		ArrayList<Room> locked = new ArrayList<Room>();
 		ArrayList<Room> parcours = new ArrayList<Room>();
@@ -432,10 +431,10 @@ public class Test {
 	@org.junit.Test(expected = DungeonTooSmallException.class)
 	public void testRandomDjException() throws DungeonTooSmallException,
 	UnknowRoomTypeException {
-		ArrayList<Room> rooms = RandomGenerate.generate(3);
-		rooms = RandomGenerate.generate(2);
-		rooms = RandomGenerate.generate(1);
-		rooms = RandomGenerate.generate(0);
+		RandomGenerate.generate(3);
+		RandomGenerate.generate(2);
+		RandomGenerate.generate(1);
+		RandomGenerate.generate(0);
 	}
 
 	@org.junit.Test

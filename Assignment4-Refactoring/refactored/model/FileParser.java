@@ -8,19 +8,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class FileParser {
-	/**
-	 * liste des ligne du fichier
-	 */
-	List<String>	allLine	= new ArrayList<String>();
 
-	/**
-	 * r�cup�re chaque ligne du fichier pass� en param�tre
-	 * 
-	 * @param file
-	 *            fichier � parser
-	 */
+	List<String> allLine = new ArrayList<String>();
+
+
 	FileParser(File file) {
 		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 			String line;
@@ -39,13 +31,7 @@ public class FileParser {
 		return allLine;
 	}
 
-	/**
-	 * @return retourne une liste de toute les lignes du fichier d�coup� sous
-	 *         forme de tableau : 1er colone = num�ro de la salle d'origine 2eme
-	 *         colone = salle au nord 3�me colone = salle a l'est
-	 *         4éme colone = salle au sud 5éme colone = salle à l'ouest
-	 *         
-	 */
+
 	public ArrayList<String[]> parseLines(String separator) {
 		ArrayList<String[]> parsedLines = new ArrayList<>();
 		String[] tmpLine;
