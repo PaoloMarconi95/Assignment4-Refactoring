@@ -200,7 +200,7 @@ public class Test {
 		EnigmaRoom er = new EnigmaRoom(1);
 		for (int i = 0; i < 20; i++) {
 			er.giveRandomWeapon(p);
-			Weapon w = p.getWp();
+			Weapon w = p.getWeapon();
 			assertTrue((w instanceof Sword) || (w instanceof Baton)
 					|| (w instanceof Mace) || (w instanceof Spike));
 		}
@@ -526,10 +526,10 @@ public class Test {
 	public void testGameOver() {
 		Dungeon dj = new Dungeon();
 		dj.p.setHealth(0);
-		assertEquals(false, dj.p.isAlive());
+		assertEquals(false, dj.p.getHealth() > 0);
 		assertEquals(true, dj.isGameOver());
 		dj.p.setHealth(100);
-		assertEquals(true, dj.p.isAlive());
+		assertEquals(true, dj.p.getHealth() > 0);
 		try {
 			dj.randomInit(4);
 		} catch (DungeonTooSmallException e) {

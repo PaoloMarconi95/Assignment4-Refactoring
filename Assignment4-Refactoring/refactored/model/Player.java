@@ -12,10 +12,13 @@ import monsters.Monster;
 
 
 public class Player {
+	
+	public static int default_health = 100;
+	
 	private int health;
 	private Torch t = new Torch();
 	private Weapon wp = new Fist();
-	private ArrayList<HealPotion> secours = new ArrayList<HealPotion>();
+	private ArrayList<HealPotion> support = new ArrayList<HealPotion>();
 	private ArrayList<Key> keyring = new ArrayList<Key>();
 
 	private Room currentRoom;
@@ -23,27 +26,24 @@ public class Player {
 
 
 	public Player(){
-		health = 100;
-		secours.add(new HealPotion());
+		this.health = default_health;
+		this.support.add(new HealPotion());
 	}
 
-	public boolean isAlive(){
-		return health > 0;
-	}
-
-	public int hit(Monster m){
-		int dmg = getWp().getPower();
-		int alea = (int)(Math.random()*21) * getWp().getPower() / 100;
-		dmg += Math.random()*101 > 50 ?	alea : -alea;
-
-		m.setHealth(m.getHealth() - dmg);
-		return dmg;
+	public int hit(Monster monster){
+		int damage = this.getWeapon().getPower();
+		int alea = (int) ((Math.random()*21) * this.getWeapon().getPower() / 100);
+		if(Math.random()*101 <= 50) {
+			alea = -alea;
+		}
+		monster.setHealth(monster.getHealth() - (damage + alea) );
+		return damage;
 	}
 
 	public void useHealthPotion(){
-		if(!secours.isEmpty()){
+		if(!support.isEmpty()){
 			if(health < 100)
-				secours.get(0).use(this);
+				support.get(0).use(this);
 			else
 				System.out.println("Impossible action : your life is full !");
 		}
@@ -95,11 +95,11 @@ public class Player {
 		return keyring;
 	}
 
-	public Weapon getWp() {
+	public Weapon getWeapon() {
 		return wp;
 	}
 
-	public void setWp(Weapon wp) {
+	public void setWeapon(Weapon wp) {
 		this.wp = wp;
 	}
 	
@@ -122,15 +122,16 @@ public class Player {
 	}
 
 	public ArrayList<HealPotion> getSecours() {
-		return secours;
+		return support;
 	}
 
 	public void displayInventory() {
-		System.out.println("Health potion : "+secours.size());
+		System.out.println("Health potion : "+support.size());
 		System.out.println("Keyring : "+keyring.size()+" key");
 		for(Key k : keyring){
 			System.out.println("Key n�"+k.ROOM_NUMBER);
 		}
 		System.out.println("Current weapon : "+wp.getName()+" ("+wp.getPower()+" power)");
 	}
+
 }

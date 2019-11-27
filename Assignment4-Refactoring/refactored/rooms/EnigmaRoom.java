@@ -58,7 +58,7 @@ public class EnigmaRoom extends Room {
 				System.out.println("Feels my wrath");
 				p.setHealth(p.getHealth() - 1);
 				System.out.println("Health : " + p.getHealth());
-				if(!p.isAlive())
+				if(p.getHealth() <= 0)
 					System.out.println("You are dead ! Game Over...");
 				else{
 					System.out.println("You have been send back to room "
@@ -86,11 +86,11 @@ public class EnigmaRoom extends Room {
 		else 
 			wp = new Mace();
 
-		if(p.getWp().getPower() < wp.getPower()){
+		if(p.getWeapon().getPower() < wp.getPower()){
 			System.out.println("I give you a "+wp.getName());
-			p.setWp(wp);
+			p.setWeapon(wp);
 		}
-		else if(p.getWp().getPower() == wp.getPower()){
+		else if(p.getWeapon().getPower() == wp.getPower()){
 			System.out.println("You already have a"+wp.getName());
 			System.out.println("So I give you a health potion. You can use it"
 					+ " by writing 'potion' in the commands bar");
@@ -98,7 +98,7 @@ public class EnigmaRoom extends Room {
 		}
 		else{
 			System.out.println("I have a "+wp.getName()+" but your "
-					+ ""+p.getWp().getName()+" is better !");
+					+ ""+p.getWeapon().getName()+" is better !");
 			System.out.println("So I give you a health potion. You can use it"
 					+ " by writing potion in the commands bar");
 			p.getSecours().add(new HealPotion());

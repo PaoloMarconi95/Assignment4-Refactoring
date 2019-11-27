@@ -56,7 +56,7 @@ public class MonsterRoom extends Room {
 		boolean escaped = false;
 
 		//while the fight is not over
-		while (p.isAlive() && monster.isAlive() && !escaped) {
+		while (p.getHealth() > 0 && monster.isAlive() && !escaped) {
 			displayInfos(p);
 			int choice = getAnwser();
 			if (choice == 1) {
@@ -92,7 +92,7 @@ public class MonsterRoom extends Room {
 			}
 		}
 
-		if (!p.isAlive()) 
+		if (p.getHealth() <= 0) 
 			System.out.println("You are dead ! Game Over...");
 		else if (!monster.isAlive()) {
 			System.out.println("Your health :" + p.getHealth());

@@ -19,7 +19,7 @@ public class TrapRoom extends Room{
 			System.out.println("Health : "+p.getHealth());
 			setActivated(true);
 		}
-		if(p.isAlive())
+		if(p.getHealth() > 0)
 			checkRoom(p);
 	}
 
