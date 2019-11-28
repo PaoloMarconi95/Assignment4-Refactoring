@@ -8,17 +8,20 @@ import exceptions.MissingExitRoomException;
 
 public class Main {
 
-	static Scanner sc = new Scanner(System.in);
+	
 	public static final int random_init_min_arg = 4;
-	public static final int not_random_init_min_arg = 4;
+	public static final int not_random_init_min_arg = 1;
+	private static Scanner sc = new Scanner(System.in);
 
+	
+	
 	public static int getAnwser() {
-		int response = 0;
-		while (sc.hasNext() && 
-				(Integer.parseInt(sc.nextLine()) != 1 || Integer.parseInt(sc.nextLine()) != 2)) {
-			System.out.println("Insert a correct Answer");
+		int answer = sc.nextInt();
+		while (answer != 1 && answer != 2) {
+				System.out.println("Insert a correct Answer");
+				answer = sc.nextInt();
 		}
-		return response;
+		return answer;
 	}
 
 	public static void main(String[] args) {
