@@ -6,7 +6,7 @@
     <position height="563" width="885" x="907" y="5"/>    
     <display autosize="false" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
-  <class id="2" language="java" name="items.Weapon" project="ProjetS5" file="/ProjetS5/src/items/Weapon.java" 
+  <class id="2" language="java" name="items.weapons.Weapon" project="ProjetS5" file="/ProjetS5/src/items/Weapon.java"
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1346" y="165"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -15,7 +15,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="items.Sword" project="ProjetS5" file="/ProjetS5/src/items/Sword.java" 
+  <class id="3" language="java" name="items.weapons.Sword" project="ProjetS5" file="/ProjetS5/src/items/Sword.java"
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1014" y="187"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -24,7 +24,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="items.Spike" project="ProjetS5" file="/ProjetS5/src/items/Spike.java" 
+  <class id="4" language="java" name="items.weapons.Spike" project="ProjetS5" file="/ProjetS5/src/items/Spike.java"
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1012" y="82"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -33,7 +33,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="items.Fist" project="ProjetS5" file="/ProjetS5/src/items/Fist.java" binary="false" 
+  <class id="5" language="java" name="items.weapons.Fist" project="ProjetS5" file="/ProjetS5/src/items/Fist.java" binary="false"
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1014" y="293"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -42,7 +42,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="items.Mace" project="ProjetS5" file="/ProjetS5/src/items/Mace.java" binary="false" 
+  <class id="6" language="java" name="items.weapons.Mace" project="ProjetS5" file="/ProjetS5/src/items/Mace.java" binary="false"
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1153" y="338"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -69,7 +69,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="9" language="java" name="items.Torch" project="ProjetS5" file="/ProjetS5/src/items/Torch.java" 
+  <class id="9" language="java" name="items.Torches" project="ProjetS5" file="/ProjetS5/src/items/Torch.java"
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1685" y="259"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

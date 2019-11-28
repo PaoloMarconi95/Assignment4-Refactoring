@@ -3,14 +3,15 @@ package test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import items.Baton;
+
+import items.Torches;
+import items.weapons.Baton;
 import items.HealPotion;
 import items.Key;
-import items.Mace;
-import items.Spike;
-import items.Sword;
-import items.Torch;
-import items.Weapon;
+import items.weapons.Mace;
+import items.weapons.Spike;
+import items.weapons.Sword;
+import items.weapons.Weapon;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -480,18 +481,8 @@ public class Test {
 	}
 
 	@org.junit.Test
-	public void testTorchConstructor() {
-		Torch t = new Torch(52);
-		assertEquals(20, t.getFire());
-		t = new Torch(-5);
-		assertEquals(20, t.getFire());
-		t = new Torch(10);
-		assertEquals(10, t.getFire());
-	}
-
-	@org.junit.Test
-	public void testTorcheReload() {
-		Torch t = new Torch(10);
+	public void testTorchReload() {
+		Torches t = new Torches();
 		t.reload();
 		assertEquals(20, t.getFire());
 	}
@@ -499,10 +490,10 @@ public class Test {
 	@org.junit.Test
 	public void testTorcheUse() {
 		Room r1 = new Room(0);
-		Torch t = new Torch();
+		Torches t = new Torches();
 		while (t.getFire() > 0) {
 			int buff = t.getFire();
-			t.use(r1);
+			t.use();
 			assertEquals(buff - 1, t.getFire());
 		}
 		assertEquals(0, t.getFire());

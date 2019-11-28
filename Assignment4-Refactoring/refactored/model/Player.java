@@ -1,13 +1,14 @@
 package model;
 import java.util.ArrayList;
+import java.util.Map;
 
+import items.Torches;
 import rooms.Room;
 
-import items.Fist;
+import items.weapons.Fist;
 import items.HealPotion;
 import items.Key;
-import items.Torch;
-import items.Weapon;
+import items.weapons.Weapon;
 import monsters.Monster;
 
 
@@ -16,10 +17,10 @@ public class Player {
 	public static int default_health = 100;
 	
 	private int health;
-	private Torch t = new Torch();
+	private Torches t = new Torches();
 	private Weapon wp = new Fist();
-	private ArrayList<HealPotion> support = new ArrayList<HealPotion>();
-	private ArrayList<Key> keyring = new ArrayList<Key>();
+	private ArrayList<HealPotion> support = new ArrayList<>();
+	private ArrayList<Key> keyring = new ArrayList<>();
 
 	private Room currentRoom;
 	private Room previousRoom;
@@ -41,9 +42,17 @@ public class Player {
 	}
 
 	public void useHealthPotion(){
-		if(!support.isEmpty()){
-			if(health < 100)
-				support.get(0).use(this);
+		if(hasHealPotions()){
+			HealPotion potion = support.get(0);
+			if(!fullHealth()) {
+				if(health + potion.getValue() > 100)
+					setHealth(100);
+				else
+					setHealth(health + potion.getValue());
+				System.out.println("You used a health potion and restored your health");
+				System.out.println("Health : " + health);
+				support.remove(0);
+			}
 			else
 				System.out.println("Impossible action : your life is full !");
 		}
@@ -51,6 +60,21 @@ public class Player {
 			System.out.println("You don't have any heal potion left");
 		}
 	}
+
+	private boolean fullHealth(){
+		if(health < 100)
+			return false;
+		else
+			return true;
+	}
+
+	private boolean hasHealPotions(){
+		if(support.isEmpty())
+			return false;
+		else
+			return true;
+	}
+
 
 	public boolean hasKeyForRoom(Room r){
 		for(Key key : keyring){
@@ -103,11 +127,11 @@ public class Player {
 		this.wp = wp;
 	}
 	
-	public Torch getTorch() {
+	public Torches getTorch() {
 		return t;
 	}
 
-	public void setT(Torch t) {
+	public void setT(Torches t) {
 		this.t = t;
 	}
 	public int getHealth() {
@@ -118,7 +142,22 @@ public class Player {
 	}
 
 	public void useTorch() {
-		getTorch().use(getCurrentRoom());
+		if(t.empty()){
+			System.out.println("Your torch is extinguished");
+		} else {
+			t.use();
+			printDirections();
+		}
+	}
+
+	private void printDirections(){
+		String possibleDirections = "";
+		for(Map.Entry<Direction, Room> entry : currentRoom.neighbors.entrySet()) {
+			Direction direction = entry.getKey();
+			possibleDirections += direction +"\n";
+		}
+		System.out.println(possibleDirections);
+
 	}
 
 	public ArrayList<HealPotion> getSecours() {

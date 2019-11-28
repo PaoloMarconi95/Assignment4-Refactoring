@@ -3,12 +3,12 @@ package rooms;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import items.Baton;
+import items.weapons.Baton;
 import items.HealPotion;
-import items.Mace;
-import items.Spike;
-import items.Sword;
-import items.Weapon;
+import items.weapons.Mace;
+import items.weapons.Spike;
+import items.weapons.Sword;
+import items.weapons.Weapon;
 import model.GenerateFromFile;
 import model.Player;
 

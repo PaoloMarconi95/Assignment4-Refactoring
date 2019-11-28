@@ -4,18 +4,13 @@ import model.Player;
 
 public abstract class Monster {
 	private int health;
-	private int power;
-	private String name;
+	private final int power;
+	private final String name;
 
-
-	public boolean isAlive(){
-		return health > 0;
-	}
-
-	public Monster(int h, int p, String n){
-		setHealth(h);
-		setPower(p);
-		setName(n);
+	public Monster(int health, int power, String name){
+		this.health = health;
+		this.power = power;
+		this.name = name;
 	}
 
 	public int getHealth() {
@@ -26,12 +21,12 @@ public abstract class Monster {
 		this.health = health;
 	}
 
-	public int getPower() {
-		return power;
+	public String getName() {
+		return name;
 	}
 
-	public void setPower(int power) {
-		this.power = power;
+	public boolean isAlive(){
+		return health > 0;
 	}
 
 	public int hit(Player p) {
@@ -42,12 +37,5 @@ public abstract class Monster {
 		return dmg;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 }
