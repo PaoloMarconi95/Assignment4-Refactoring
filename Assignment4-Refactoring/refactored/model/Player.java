@@ -78,7 +78,7 @@ public class Player {
 
 	public boolean hasKeyForRoom(Room r){
 		for(Key key : keyring){
-			if(r.getNumber() == key.ROOM_NUMBER)
+			if(r.getNumero() == key.ROOM_NUMBER)
 				return true;
 		}
 		return false;
@@ -115,7 +115,7 @@ public class Player {
 		this.previousRoom = previousRoom;
 	}
 
-	public ArrayList<Key> Keyring() {
+	public ArrayList<Key> getKeyring() {
 		return keyring;
 	}
 

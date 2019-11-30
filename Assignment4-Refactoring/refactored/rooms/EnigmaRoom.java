@@ -62,7 +62,7 @@ public class EnigmaRoom extends Room {
 					System.out.println("You are dead ! Game Over...");
 				else{
 					System.out.println("You have been send back to room "
-							+ "n�"+p.getPreviousRoom().getNumber());
+							+ "n�"+p.getPreviousRoom().getNumero());
 					p.setCurrentRoom(p.getPreviousRoom());
 					p.getCurrentRoom().act(p);//a voir
 				}

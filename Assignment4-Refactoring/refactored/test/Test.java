@@ -67,7 +67,7 @@ public class Test {
 			r = locked.get(0);
 		else
 			r = null;
-		assertEquals(6, r.getNumber());
+		assertEquals(6, r.getNumero());
 
 	}
 
@@ -557,13 +557,13 @@ public class Test {
 	public void testCheckItems() {
 		Player p = new Player();
 		p.getTorch().extinguish();
-		assertEquals(p.Keyring().size(),0);
+		assertEquals(p.getKeyring().size(),0);
 		Room r = new Room(1);
 		r.setKey(new Key(1));
 		r.setHasPotion(true);
 		r.setHasTorch(true);
 		r.act(p);
-		assertTrue(p.Keyring().size()>0);
+		assertTrue(p.getKeyring().size()>0);
 		assertEquals(p.getSecours().size(),2);
 		assertEquals(p.getTorch().getFire(),20);
 	}
