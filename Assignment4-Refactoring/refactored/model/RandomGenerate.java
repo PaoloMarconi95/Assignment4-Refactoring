@@ -29,12 +29,12 @@ public class RandomGenerate {
 
 
 	private static ArrayList<Room> getLockedRoom(ArrayList<Room> rooms) {
-		ArrayList<Room> list = new ArrayList<Room>();
+		ArrayList<Room> roomlist = new ArrayList<Room>();
 		for (Room room : rooms) {
 			if(room.isLocked())
-				list.add(room);
+				roomlist.add(room);
 		}
-		return list;
+		return roomlist;
 	}
 
 
@@ -53,25 +53,6 @@ public class RandomGenerate {
 
 	}
 
-	//	public static Room getFirstRoomLockedFrom(Room r, ArrayList<Room> list){
-	//		Room locked = null;
-	//
-	//		if(r.isLocked())
-	//			return r;
-	//		if(!list.contains(r)){
-	//			list.add(r);
-	//			for(Entry<Direction, Room> entry : r.neighbors.entrySet()) {
-	//				Room next = entry.getValue();
-	//				locked = getFirstRoomLockedFrom(next, list);
-	//				if(locked.isLocked())
-	//					break;
-	//			}
-	//		}
-	//		return locked;
-	//	}
-
-
-
 	public static void getConnectedRoom(Room r, ArrayList<Room> list){
 
 		for(Entry<Direction, Room> entry : r.neighbors.entrySet()) {
@@ -84,18 +65,6 @@ public class RandomGenerate {
 
 		}
 	}
-
-
-
-	//	private static void generateExitKey(ArrayList<Room> rooms) {
-	//		Collections.shuffle(rooms);
-	//		for (Room r : rooms) {
-	//			if(!r.isExit() && !r.isEntrance() && r.getNeighborsCount() == 1){
-	//				r.setKey(new Key(getExitRoomNumber(rooms)));
-	//				break;
-	//			}
-	//		}
-	//	}
 
 	
 	private static void generateKey(ArrayList<Room> rooms) {
@@ -316,8 +285,7 @@ public class RandomGenerate {
 		} catch (UnknowRoomTypeException | DungeonTooSmallException | MissingExitRoomException | MissingEntranceRoomException e) {
 			e.printStackTrace();
 		}
-
-
-
-	}
+	} 
+	
+	
 }

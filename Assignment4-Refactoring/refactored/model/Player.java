@@ -168,7 +168,7 @@ public class Player {
 		System.out.println("Health potion : "+support.size());
 		System.out.println("Keyring : "+keyring.size()+" key");
 		for(Key k : keyring){
-			System.out.println("Key n�"+k.ROOM_NUMBER);
+			System.out.println("Key n."+k.ROOM_NUMBER);
 		}
 		System.out.println("Current weapon : "+wp.getName()+" ("+wp.getPower()+" power)");
 	}

@@ -13,12 +13,12 @@ import rooms.RoomFactory;
 public class GenerateFromFile {
 
 	public static ArrayList<Room> generateDjFromFile(File f) {
-		ArrayList<Room> rooms = new ArrayList<Room>();
+		ArrayList<Room> rooms_to_set = new ArrayList<Room>();
 		FileParser fp = new FileParser(f);
-		ArrayList<String[]> roomList = fp.parseLines(" +");
-		createRooms(roomList, rooms);  // create all the rooms
-		connectRooms(roomList, rooms); // connect all the rooms
-		return rooms;
+		ArrayList<String[]> rooms_from_file = fp.parseLines(" +");
+		createRooms(rooms_from_file, rooms_to_set);  // create all the rooms
+		connectRooms(rooms_from_file, rooms_to_set); // connect all the rooms
+		return rooms_to_set;
 	}
 
 	public static Room getRoomNumber(int i, ArrayList<Room> rooms) {
@@ -68,7 +68,7 @@ public class GenerateFromFile {
 			for (int i = 1; i < 5; i++) {
 				String room2 = list[i];
 				if (!room2.equals("*")) {
-					Direction direction = chooseDirection(i);
+					Direction direction = Direction.chooseDirection(i);
 					int numRoom1 = Integer.parseInt(room);
 					int numRoom2 = Integer.parseInt(room2);
 					Room r1 = getRoomNumber(numRoom1, rooms);
@@ -78,27 +78,5 @@ public class GenerateFromFile {
 			}
 		}
 	}
-
-	private static Direction chooseDirection(int index) {
-		Direction direction;
-		switch (index) {
-		case 1:
-			direction = Direction.NORTH;
-			break;
-		case 2:
-			direction = Direction.EAST;
-			break;
-		case 3:
-			direction = Direction.SOUTH;
-			break;
-		case 4:
-			direction = Direction.WEST;
-			break;
-		default:
-			direction = null;
-			break;
-		}
-		return direction;
-	}
-
+	
 }
