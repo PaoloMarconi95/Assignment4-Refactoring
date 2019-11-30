@@ -2,7 +2,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Map;
 
-import items.Torches;
+import items.Torch;
 import rooms.Room;
 
 import items.weapons.Fist;
@@ -17,7 +17,7 @@ public class Player {
 	public static int default_health = 100;
 	
 	private int health;
-	private Torches t = new Torches();
+	private Torch t = new Torch();
 	private Weapon wp = new Fist();
 	private ArrayList<HealPotion> support = new ArrayList<>();
 	private ArrayList<Key> keyring = new ArrayList<>();
@@ -78,7 +78,7 @@ public class Player {
 
 	public boolean hasKeyForRoom(Room r){
 		for(Key key : keyring){
-			if(r.getNumero() == key.ROOM_NUMBER)
+			if(r.getNumber() == key.ROOM_NUMBER)
 				return true;
 		}
 		return false;
@@ -115,7 +115,7 @@ public class Player {
 		this.previousRoom = previousRoom;
 	}
 
-	public ArrayList<Key> getKeyring() {
+	public ArrayList<Key> Keyring() {
 		return keyring;
 	}
 
@@ -127,11 +127,11 @@ public class Player {
 		this.wp = wp;
 	}
 	
-	public Torches getTorch() {
+	public Torch getTorch() {
 		return t;
 	}
 
-	public void setT(Torches t) {
+	public void setT(Torch t) {
 		this.t = t;
 	}
 	public int getHealth() {

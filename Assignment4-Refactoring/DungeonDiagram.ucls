@@ -69,7 +69,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="9" language="java" name="items.Torches" project="ProjetS5" file="/ProjetS5/src/items/Torch.java"
+  <class id="9" language="java" name="items.Torch" project="ProjetS5" file="/ProjetS5/src/items/Torch.java"
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1685" y="259"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

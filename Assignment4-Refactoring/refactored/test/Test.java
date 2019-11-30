@@ -1,10 +1,9 @@
 package test;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import items.Torches;
+import items.Torch;
 import items.weapons.Baton;
 import items.HealPotion;
 import items.Key;
@@ -68,7 +67,7 @@ public class Test {
 			r = locked.get(0);
 		else
 			r = null;
-		assertEquals(6, r.getNumero());
+		assertEquals(6, r.getNumber());
 
 	}
 
@@ -482,7 +481,7 @@ public class Test {
 
 	@org.junit.Test
 	public void testTorchReload() {
-		Torches t = new Torches();
+		Torch t = new Torch();
 		t.reload();
 		assertEquals(20, t.getFire());
 	}
@@ -490,7 +489,7 @@ public class Test {
 	@org.junit.Test
 	public void testTorcheUse() {
 		Room r1 = new Room(0);
-		Torches t = new Torches();
+		Torch t = new Torch();
 		while (t.getFire() > 0) {
 			int buff = t.getFire();
 			t.use();
@@ -558,13 +557,13 @@ public class Test {
 	public void testCheckItems() {
 		Player p = new Player();
 		p.getTorch().extinguish();
-		assertEquals(p.getKeyring().size(),0);
+		assertEquals(p.Keyring().size(),0);
 		Room r = new Room(1);
 		r.setKey(new Key(1));
 		r.setHasPotion(true);
 		r.setHasTorch(true);
 		r.act(p);
-		assertTrue(p.getKeyring().size()>0);
+		assertTrue(p.Keyring().size()>0);
 		assertEquals(p.getSecours().size(),2);
 		assertEquals(p.getTorch().getFire(),20);
 	}

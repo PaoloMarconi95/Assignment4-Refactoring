@@ -6,11 +6,11 @@ import model.Direction;
 import rooms.Room;
 
 
-public class Torches {
+public class Torch {
 	private static final int	MAX_FIRE	= 20;
 	private int					fire;
 
-	public Torches() {
+	public Torch() {
 		fire = MAX_FIRE;
 	}
 
