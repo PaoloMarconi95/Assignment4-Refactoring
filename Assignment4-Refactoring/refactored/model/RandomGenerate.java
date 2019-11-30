@@ -87,7 +87,7 @@ public class RandomGenerate {
 
 		while(locked != null){
 
-			Key k = new Key(locked.getNumero());
+			Key k = new Key(locked.getNumber());
 
 			list.clear();
 			RandomGenerate.getConnectedRoom(entrance, list); // stocke les room accessibles depuis l'entree dans list
@@ -183,7 +183,7 @@ public class RandomGenerate {
 	private static int getExitRoomNumber(ArrayList<Room> rooms) {
 		for(Room r : rooms){
 			if(r.isExit())
-				return r.getNumero();
+				return r.getNumber();
 		}
 		return 0;
 	}
@@ -191,7 +191,7 @@ public class RandomGenerate {
 	private static int getEntranceRoomNumber(ArrayList<Room> rooms) {
 		for(Room r : rooms){
 			if(r.isEntrance())
-				return r.getNumero();
+				return r.getNumber();
 		}
 		return 0;
 	}
@@ -219,7 +219,7 @@ public class RandomGenerate {
 				//TODO maybe add a random for different room type
 				Room current = RoomFactory.generateRoom("Normal", rooms);
 				//get the room before in the arraylist (to make one path to the exit)
-				Room before = rooms.get(current.getNumero()-2);
+				Room before = rooms.get(current.getNumber()-2);
 				Direction dir = getRandomDirection();
 				//while we don't find a empty direction to connect the current room to the previous room
 				while(before.getNextRoom(dir)!= null)
@@ -273,7 +273,7 @@ public class RandomGenerate {
 			getFirstRoomLockedFrom(r1, locked, parcours);
 
 			test = locked.get(0);
-			System.out.println(test.getNumero());
+			System.out.println(test.getNumber());
 			System.out.println(test.toString());
 			System.out.println("------------------");
 

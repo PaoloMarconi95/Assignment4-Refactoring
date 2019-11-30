@@ -23,7 +23,7 @@ public class GenerateFromFile {
 
 	public static Room getRoomNumber(int i, ArrayList<Room> rooms) {
 		for (Room room : rooms) {
-			if (room.getNumero() == i)
+			if (room.getNumber() == i)
 				return room;
 		}
 		return null;
