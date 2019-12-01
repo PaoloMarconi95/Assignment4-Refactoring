@@ -20,7 +20,7 @@ public class Torch {
 	}
 
 	public boolean empty(){
-		if(fire > 0)
+		if(fire <= 0)
 			return true;
 		else
 			return false;

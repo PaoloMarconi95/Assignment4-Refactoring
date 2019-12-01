@@ -75,58 +75,54 @@ public class Test {
 
 
 	@org.junit.Test
-	public void testDjRandomInit() throws DungeonTooSmallException,
+	public void testdungeonRandomInit() throws DungeonTooSmallException,
 	MissingExitRoomException, MissingEntranceRoomException {
-		Dungeon dj = new Dungeon();
 		for(int i = 4; i < 20; i++){
-			dj.randomInit(7);
-			assertTrue(dj.hasExit());
-			assertTrue(dj.hasEntrance());
+			Dungeon dungeon = new Dungeon(7);
+			assertTrue(dungeon.getExit() != null);
+			assertTrue(dungeon.getEntrance() != null);
 		}
 	}
 
 	@org.junit.Test
 	public void testInitFromFile() throws MissingExitRoomException,
 	MissingEntranceRoomException {
-		Dungeon dj = new Dungeon();
-		dj.initFromFile("dj1.txt");
-		assertTrue(dj.hasExit());
-		assertTrue(dj.hasEntrance());
+		Dungeon dungeon = new Dungeon("dj1.txt");
+		assertTrue(dungeon.getExit() != null);
+		assertTrue(dungeon.getEntrance() != null);
 	}
 
 	@org.junit.Test(expected = MissingExitRoomException.class)
 	public void testNoExit() throws MissingExitRoomException,
 	MissingEntranceRoomException {
-		Dungeon dj = new Dungeon();
-		dj.initFromFile("testDjNoExit.txt");
+		Dungeon dungeon = new Dungeon("testDjNoExit.txt");
 	}
 
 	@org.junit.Test(expected = MissingEntranceRoomException.class)
 	public void testNoEntrance() throws MissingExitRoomException,
 	MissingEntranceRoomException {
-		Dungeon dj = new Dungeon();
-		dj.initFromFile("testDjNoEntrance.txt");
+		Dungeon dungeon = new Dungeon("testDjNoEntrance.txt");
 	}
 
 	@org.junit.Test
 	public void testCanPlayerGoDir() {
-		Dungeon dj = new Dungeon();
+		Dungeon dungeon = new Dungeon();
 
-		Room r1 = new Room(1);
-		Room r2 = new Room(2);
+		Room room1 = new Room(1);
+		Room room2 = new Room(2);
 
-		r1.setEntrance(true);
-		dj.setEntrance(r1);
+		room1.setEntrance(true);
+		dungeon.setEntrance(room1);
 
-		dj.getRooms().add(r1);
-		dj.getRooms().add(r2);
-		dj.initPlayer();
+		dungeon.getRooms().add(room1);
+		dungeon.getRooms().add(room2);
+		dungeon.initPlayer();
 
-		RoomFactory.connectRoom(r1, Direction.EAST, r2);
-		assertTrue(dj.canPlayerGoTo(Direction.EAST));
-		assertFalse(dj.canPlayerGoTo(Direction.NORTH));
-		assertFalse(dj.canPlayerGoTo(Direction.SOUTH));
-		assertFalse(dj.canPlayerGoTo(Direction.WEST));
+		RoomFactory.connectRoom(room1, Direction.EAST, room2);
+		assertTrue(dungeon.canPlayerGoTo(Direction.EAST));
+		assertFalse(dungeon.canPlayerGoTo(Direction.NORTH));
+		assertFalse(dungeon.canPlayerGoTo(Direction.SOUTH));
+		assertFalse(dungeon.canPlayerGoTo(Direction.WEST));
 	}
 
 	@org.junit.Test
@@ -137,48 +133,48 @@ public class Test {
 
 	@org.junit.Test
 	public void testPlayerUsePotion() {
-		Player p = new Player();
+		Player player = new Player();
 		Arakne a = new Arakne();
 		// the arakne hit~10
-		a.hit(p);
-		p.getSecours().add(new HealPotion());
-		p.getSecours().add(new HealPotion());
+		a.hit(player);
+		player.getSecours().add(new HealPotion());
+		player.getSecours().add(new HealPotion());
 		// player has 3 potions (one from the init)
 
-		int playerLife = p.getHealth();// save the player life after get hit
-		p.useHealthPotion();// 2potions left
+		int playerLife = player.getHealth();// save the player life after get hit
+		player.useHealthPotion();// 2potions left
 		// the life of the player has increase after use the potion
-		assertTrue(playerLife < p.getHealth());
+		assertTrue(playerLife < player.getHealth());
 		// after using a +40 pdv potion, the life max is limit to 100
-		assertEquals(p.getHealth(), 100);
-		p.useHealthPotion();
+		assertEquals(player.getHealth(), 100);
+		player.useHealthPotion();
 		// When full life, player can't use any more potions
-		assertEquals(p.getSecours().size(), 2);
-		a.hit(p);
-		playerLife = p.getHealth();
-		p.getSecours().clear();
+		assertEquals(player.getSecours().size(), 2);
+		a.hit(player);
+		playerLife = player.getHealth();
+		player.getSecours().clear();
 		// if player dont have health potion, he can't use it
-		p.useHealthPotion();
-		assertEquals(p.getHealth(), playerLife);
+		player.useHealthPotion();
+		assertEquals(player.getHealth(), playerLife);
 
-		p.getSecours().add(new HealPotion());
-		p.setHealth(30);
-		p.useHealthPotion();
-		assertEquals(p.getHealth(), 70);
+		player.getSecours().add(new HealPotion());
+		player.setHealth(30);
+		player.useHealthPotion();
+		assertEquals(player.getHealth(), 70);
 	}
 
 	@org.junit.Test
 	public void testPlayerHit() {
-		Player p = new Player();
+		Player player = new Player();
 		Arakne a = new Arakne();
 		int arakneLife = a.getHealth();
-		int playerLife = p.getHealth();
-		p.hit(a);
-		a.hit(p);
+		int playerLife = player.getHealth();
+		player.hit(a);
+		a.hit(player);
 		// the life of the player has decrease
 		assertTrue(arakneLife > a.getHealth());
 		// the life of the player has decrease
-		assertTrue(playerLife > p.getHealth());
+		assertTrue(playerLife > player.getHealth());
 	}
 
 	@org.junit.Test
@@ -196,11 +192,11 @@ public class Test {
 
 	@org.junit.Test
 	public void testRandomWeapon() {
-		Player p = new Player();
+		Player player = new Player();
 		EnigmaRoom er = new EnigmaRoom(1);
 		for (int i = 0; i < 20; i++) {
-			er.giveRandomWeapon(p);
-			Weapon w = p.getWeapon();
+			er.giveRandomWeapon(player);
+			Weapon w = player.getWeapon();
 			assertTrue((w instanceof Sword) || (w instanceof Baton)
 					|| (w instanceof Mace) || (w instanceof Spike));
 		}
@@ -217,12 +213,12 @@ public class Test {
 
 	@org.junit.Test
 	public void testRoomConnection() {
-		Dungeon dj = new Dungeon();
+		Dungeon dungeon = new Dungeon();
 		Room r1;
 		Room r2;
 		try {
-			r1 = RoomFactory.generateRoom("Normal", dj.getRooms());
-			r2 = RoomFactory.generateRoom("Normal", dj.getRooms());
+			r1 = RoomFactory.generateRoom("Normal", dungeon.getRooms());
+			r2 = RoomFactory.generateRoom("Normal", dungeon.getRooms());
 			assertFalse(r1.neighbors.containsKey(Direction.NORTH));
 			assertFalse(r1.neighbors.containsKey(Direction.EAST));
 			assertFalse(r1.neighbors.containsKey(Direction.WEST));
@@ -265,21 +261,21 @@ public class Test {
 
 	@org.junit.Test
 	public void testPlayerMove() {
-		Dungeon dj = new Dungeon();
+		Dungeon dungeon = new Dungeon();
 		Room r1, r2;
 		try {
-			r1 = RoomFactory.generateRoom("Normal", dj.getRooms());
-			r2 = RoomFactory.generateRoom("Normal", dj.getRooms());
+			r1 = RoomFactory.generateRoom("Normal", dungeon.getRooms());
+			r2 = RoomFactory.generateRoom("Normal", dungeon.getRooms());
 			RoomFactory.connectRoom(r1, Direction.NORTH, r2);
-			dj.setEntrance(r1);
+			dungeon.setEntrance(r1);
 			// init player in room 1
-			dj.initPlayer();
-			assertTrue(dj.p.getCurrentRoom() == r1);
-			assertTrue(dj.p.canGetInRoom(r2));
-			dj.executeCommand("n");
-			assertTrue(dj.p.getCurrentRoom() == r2);
-			dj.executeCommand("s");
-			assertTrue(dj.p.getCurrentRoom() == r1);
+			dungeon.initPlayer();
+			assertTrue(dungeon.player.getCurrentRoom() == r1);
+			assertTrue(dungeon.player.canGetInRoom(r2));
+			dungeon.executeCommand("n");
+			assertTrue(dungeon.player.getCurrentRoom() == r2);
+			dungeon.executeCommand("s");
+			assertTrue(dungeon.player.getCurrentRoom() == r1);
 		} catch (UnknowRoomTypeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -288,17 +284,17 @@ public class Test {
 
 	@org.junit.Test
 	public void testPlayerOpenDoor() {
-		Dungeon dj = new Dungeon();
+		Dungeon dungeon = new Dungeon();
 		Room r1, r2;
 		try {
-			r1 = RoomFactory.generateRoom("Normal", dj.getRooms());
-			r2 = RoomFactory.generateRoom("Normal", dj.getRooms());
+			r1 = RoomFactory.generateRoom("Normal", dungeon.getRooms());
+			r2 = RoomFactory.generateRoom("Normal", dungeon.getRooms());
 			r2.setLocked(true);
 			RoomFactory.connectRoom(r1, Direction.EAST, r2);
-			dj.initPlayer();
-			assertFalse(dj.p.canGetInRoom(r2));
-			dj.p.addkey(new Key(2));
-			assertTrue(dj.p.canGetInRoom(r2));
+			dungeon.initPlayer();
+			assertFalse(dungeon.player.canGetInRoom(r2));
+			dungeon.player.addkey(new Key(2));
+			assertTrue(dungeon.player.canGetInRoom(r2));
 
 		} catch (UnknowRoomTypeException e) {
 			// TODO Auto-generated catch block
@@ -366,52 +362,52 @@ public class Test {
 
 	@org.junit.Test
 	public void testParseFile() {
-		Dungeon dj = new Dungeon();
-		dj.setRooms(GenerateFromFile.generateDjFromFile(new File("testDjNoExit.txt")));
+		Dungeon dungeon = new Dungeon();
+		dungeon.setRooms(GenerateFromFile.generateDjFromFile(new File("testDjNoExit.txt")));
 		// Room1
-		Room r1 = dj.getRooms().get(0);
+		Room r1 = dungeon.getRooms().get(0);
 		assertTrue(r1.neighbors.containsKey(Direction.NORTH));
 		assertTrue(r1.neighbors.containsKey(Direction.WEST));
 		assertFalse(r1.neighbors.containsKey(Direction.EAST));
 		assertFalse(r1.neighbors.containsKey(Direction.SOUTH));
 
 		// Room2
-		Room r2 = dj.getRooms().get(1);
+		Room r2 = dungeon.getRooms().get(1);
 		assertTrue(r2.neighbors.containsKey(Direction.NORTH));
 		assertTrue(r2.neighbors.containsKey(Direction.SOUTH));
 		assertFalse(r2.neighbors.containsKey(Direction.EAST));
 		assertFalse(r2.neighbors.containsKey(Direction.WEST));
 
 		// Room3
-		Room r3 = dj.getRooms().get(2);
+		Room r3 = dungeon.getRooms().get(2);
 		assertTrue(r3.neighbors.containsKey(Direction.NORTH));
 		assertTrue(r3.neighbors.containsKey(Direction.EAST));
 		assertFalse(r3.neighbors.containsKey(Direction.WEST));
 		assertFalse(r3.neighbors.containsKey(Direction.SOUTH));
 
 		// Room4
-		Room r4 = dj.getRooms().get(3);
+		Room r4 = dungeon.getRooms().get(3);
 		assertTrue(r4.neighbors.containsKey(Direction.NORTH));
 		assertTrue(r4.neighbors.containsKey(Direction.WEST));
 		assertTrue(r4.neighbors.containsKey(Direction.SOUTH));
 		assertFalse(r4.neighbors.containsKey(Direction.EAST));
 
 		// Room5
-		Room r5 = dj.getRooms().get(4);
+		Room r5 = dungeon.getRooms().get(4);
 		assertTrue(r5.neighbors.containsKey(Direction.SOUTH));
 		assertFalse(r5.neighbors.containsKey(Direction.WEST));
 		assertFalse(r5.neighbors.containsKey(Direction.EAST));
 		assertFalse(r5.neighbors.containsKey(Direction.NORTH));
 
 		// Room6
-		Room r6 = dj.getRooms().get(5);
+		Room r6 = dungeon.getRooms().get(5);
 		assertTrue(r6.neighbors.containsKey(Direction.EAST));
 		assertFalse(r6.neighbors.containsKey(Direction.WEST));
 		assertFalse(r6.neighbors.containsKey(Direction.NORTH));
 		assertFalse(r6.neighbors.containsKey(Direction.SOUTH));
 
 		// Room7
-		Room r7 = dj.getRooms().get(6);
+		Room r7 = dungeon.getRooms().get(6);
 		assertTrue(r7.neighbors.containsKey(Direction.SOUTH));
 		assertFalse(r7.neighbors.containsKey(Direction.WEST));
 		assertFalse(r7.neighbors.containsKey(Direction.EAST));
@@ -429,7 +425,7 @@ public class Test {
 	}
 
 	@org.junit.Test(expected = DungeonTooSmallException.class)
-	public void testRandomDjException() throws DungeonTooSmallException,
+	public void testRandomdungeonException() throws DungeonTooSmallException,
 	UnknowRoomTypeException {
 		RandomGenerate.generate(3);
 		RandomGenerate.generate(2);
@@ -438,7 +434,7 @@ public class Test {
 	}
 
 	@org.junit.Test
-	public void testRandomDjSize() {
+	public void testRandomdungeonSize() {
 		ArrayList<Room> rooms = new ArrayList<Room>();
 		RandomGenerate.generateLinearDj(4, rooms);
 		assertEquals(rooms.size(), 4);
@@ -453,7 +449,7 @@ public class Test {
 	}
 
 	@org.junit.Test
-	public void testLinearDjConnection() {
+	public void testLineardungeonConnection() {
 		for (int i = 0; i < 10; i++) {
 			ArrayList<Room> rooms = new ArrayList<Room>();
 			RandomGenerate.generateLinearDj((int) ((Math.random() * 22) + 4), rooms);
@@ -466,7 +462,7 @@ public class Test {
 	}
 
 	@org.junit.Test
-	public void testRandomDjConnection() {
+	public void testRandomdungeonConnection() {
 		try {
 			for (int i = 0; i < 10; i++) {
 				ArrayList<Room> rooms = RandomGenerate.generate(4);
@@ -502,26 +498,26 @@ public class Test {
 	@org.junit.Test
 	public void testActivatedRoom() {
 		TrapRoom trap = new TrapRoom(0);
-		Player p = new Player();
+		Player player = new Player();
 		assertEquals(false, trap.isActivated());
-		trap.act(p);
-		assertEquals(p.getHealth(), 99);
+		trap.act(player);
+		assertEquals(player.getHealth(), 99);
 		assertEquals(true, trap.isActivated());
-		trap.act(p);
-		assertEquals(p.getHealth(), 99);
+		trap.act(player);
+		assertEquals(player.getHealth(), 99);
 
 	}
 
 	@org.junit.Test
 	public void testGameOver() {
-		Dungeon dj = new Dungeon();
-		dj.p.setHealth(0);
-		assertEquals(false, dj.p.getHealth() > 0);
-		assertEquals(true, dj.isGameOver());
-		dj.p.setHealth(100);
-		assertEquals(true, dj.p.getHealth() > 0);
+		Dungeon dungeon = new Dungeon();
+		dungeon.player.setHealth(0);
+		assertEquals(false, dungeon.player.getHealth() > 0);
+		assertEquals(true, dungeon.isGameOver());
+		dungeon.player.setHealth(100);
+		assertEquals(true, dungeon.player.getHealth() > 0);
 		try {
-			dj.randomInit(4);
+			dungeon = new Dungeon(4);
 		} catch (DungeonTooSmallException e) {
 
 			e.printStackTrace();
@@ -532,8 +528,8 @@ public class Test {
 
 			e.printStackTrace();
 		}
-		dj.p.setCurrentRoom(dj.getExit());
-		assertEquals(true, dj.isGameOver());
+		dungeon.player.setCurrentRoom(dungeon.getExit());
+		assertEquals(true, dungeon.isGameOver());
 	}
 
 	@org.junit.Test
@@ -555,17 +551,17 @@ public class Test {
 
 	@org.junit.Test
 	public void testCheckItems() {
-		Player p = new Player();
-		p.getTorch().extinguish();
-		assertEquals(p.getKeyring().size(),0);
-		Room r = new Room(1);
-		r.setKey(new Key(1));
-		r.setHasPotion(true);
-		r.setHasTorch(true);
-		r.act(p);
-		assertTrue(p.getKeyring().size()>0);
-		assertEquals(p.getSecours().size(),2);
-		assertEquals(p.getTorch().getFire(),20);
+		Player player = new Player();
+		player.getTorch().extinguish();
+		assertEquals(player.getKeyring().size(),0);
+		Room room = new Room(1);
+		room.setKey(new Key(1));
+		room.setHasPotion(true);
+		room.setHasTorch(true);
+		room.act(player);
+		assertTrue(player.getKeyring().size()>0);
+		assertEquals(player.getSecours().size(),2);
+		assertEquals(player.getTorch().getFire(),20);
 	}
 
 

@@ -8,38 +8,33 @@ import exceptions.MissingExitRoomException;
 
 public class Main {
 
-	
-	public static final int random_init_min_arg = 4;
-	public static final int not_random_init_min_arg = 1;
-	private static Scanner sc = new Scanner(System.in);
-
+	private static Scanner scanner = new Scanner(System.in);
 	
 	
 	public static int getAnwser() {
-		int answer = sc.nextInt();
+		int answer = scanner.nextInt();
 		while (answer != 1 && answer != 2) {
 				System.out.println("Insert a correct Answer");
-				answer = sc.nextInt();
+				answer = scanner.nextInt();
 		}
 		return answer;
 	}
 
 	public static void main(String[] args) {
 		System.out.println("1) Random dj\n2) Dungeon from text");
-		Dungeon dungeon = new Dungeon();
 		int response = Main.getAnwser();
 		if (response == 1) {
-			initializeRandom(dungeon);
+			initializeRandom();
 		} else {
-			initializeNotRandom(dungeon);
+			initializeNotRandom();
 		}
 		System.out.println("Congratulation ! You have finished the game !");
 	}
 
-	private static void initializeNotRandom(Dungeon dungeon) {
+	private static void initializeNotRandom() {
 		try {
-			for (int i = not_random_init_min_arg; i < 4; i++) {
-				dungeon.initFromFile("dj" + i + ".txt");
+			for(int i = Dungeon.not_random_init_min_arg; i < Dungeon.not_random_init_max_arg; i++) {
+				Dungeon dungeon = new Dungeon("dj" + i + ".txt");
 				System.out.println("Dungeon number " + i);
 				while (!dungeon.isGameOver()) {
 					dungeon.update();
@@ -48,19 +43,17 @@ public class Main {
 					i--;
 					System.out.println("You loose ! The level is restarted !");
 				}
-			}
-
+			} // end of for
 		} catch (MissingExitRoomException | MissingEntranceRoomException e) {
 			e.printStackTrace();
 		}
-
 	}
 
-	private static void initializeRandom(Dungeon dungeon) {
+	private static void initializeRandom() {
 		try {
-			for (int i = random_init_min_arg; i < 7; i++) { 
+			for (int i = Dungeon.random_init_min_arg; i < Dungeon.random_init_max_arg; i++) { 
 				System.out.println("Dungeon number " + (i - 3));
-				dungeon.randomInit(i);
+				Dungeon dungeon = new Dungeon(i);
 				while (!dungeon.isGameOver())
 					dungeon.update();
 				if (!dungeon.isFinish()) {// if the player is dead, he can retry the level
@@ -68,7 +61,7 @@ public class Main {
 					System.out.println("You loose ! The level is restarted randomly... !");
 				}
 			}
-		} catch (MissingExitRoomException | MissingEntranceRoomException | DungeonTooSmallException e) {
+		} catch (DungeonTooSmallException | MissingExitRoomException | MissingEntranceRoomException e) {
 			e.printStackTrace();
 		}
 	}

@@ -277,8 +277,7 @@ public class RandomGenerate {
 			System.out.println(test.toString());
 			System.out.println("------------------");
 
-			Dungeon dg = new Dungeon();
-			dg.randomInit(6);
+			Dungeon dg = new Dungeon(6);
 			for(Room r : dg.getRooms())
 				System.out.println(r.toString());
 
