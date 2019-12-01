@@ -78,7 +78,7 @@ public class Player {
 
 	public boolean hasKeyForRoom(Room r){
 		for(Key key : keyring){
-			if(r.getNumero() == key.ROOM_NUMBER)
+			if(r.getNumber() == key.ROOM_NUMBER)
 				return true;
 		}
 		return false;
