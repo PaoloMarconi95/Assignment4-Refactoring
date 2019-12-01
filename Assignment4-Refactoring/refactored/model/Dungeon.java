@@ -13,7 +13,7 @@ import rooms.Room;
 public class Dungeon {
 
 	Scanner	scanner = new Scanner(System.in);
-	public Player player = new Player();
+	public final Player player = new Player();
 	private boolean	playerMoved	= true;
 
 	private ArrayList<Room>	rooms = new ArrayList<Room>();
@@ -31,14 +31,14 @@ public class Dungeon {
 	MissingExitRoomException, MissingEntranceRoomException {
 		rooms = RandomGenerate.generate(size);
 		initEntranceAndExit();
-		initPlayer();
+		player.setCurrentRoom(entrance);
 	}
 	
 	public Dungeon(String s) throws MissingExitRoomException,
 	MissingEntranceRoomException {
 		rooms = GenerateFromFile.generateDjFromFile(new File(s));
 		initEntranceAndExit();
-		initPlayer();
+		player.setCurrentRoom(entrance);
 	}
 
 	private void initEntranceAndExit() throws MissingExitRoomException,
@@ -66,12 +66,6 @@ public class Dungeon {
 		player.getCurrentRoom().act(player);
 
 	}
-
-	public void initPlayer() {
-		player = new Player();
-		player.setCurrentRoom(entrance);
-	}
-
 	public boolean isFinish() {
 		return player.getCurrentRoom().isExit();
 	}
@@ -81,7 +75,7 @@ public class Dungeon {
 	}
 
 	public boolean canPlayerGoTo(Direction dir) {
-		if (player.getCurrentRoom().neighbors.containsKey(dir)) {
+		if (player.getCurrentRoom().getNeighbors().containsKey(dir)) {
 			// key is needed
 			if (player.getCurrentRoom().getNextRoom(dir).isLocked()) {
 				if (!player.hasKeyForRoom(player.getCurrentRoom().getNextRoom(dir))) {

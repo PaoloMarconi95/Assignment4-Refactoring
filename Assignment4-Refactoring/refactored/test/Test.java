@@ -62,7 +62,7 @@ public class Test {
 		if(!locked.isEmpty())
 			r = locked.get(0);
 		else
-			r = null;
+			r = new Room(1);
 		assertTrue(r != null);
 		assertEquals(6, r.getNumber());
 
@@ -75,6 +75,7 @@ public class Test {
 	public void testdungeonRandomInit() throws DungeonTooSmallException,
 	MissingExitRoomException, MissingEntranceRoomException {
 		for(int i = 4; i < 20; i++){
+			System.out.println("ciao");
 			Dungeon dungeon = new Dungeon(7);
 			assertTrue(dungeon.getExit() != null);
 			assertTrue(dungeon.getEntrance() != null);
@@ -113,7 +114,7 @@ public class Test {
 
 		dungeon.getRooms().add(room1);
 		dungeon.getRooms().add(room2);
-		dungeon.initPlayer();
+		dungeon.player.setCurrentRoom(dungeon.getEntrance());
 
 		RoomFactory.connectRoom(room1, Direction.EAST, room2);
 		assertTrue(dungeon.canPlayerGoTo(Direction.EAST));
@@ -215,41 +216,41 @@ public class Test {
 		Room r2;
 		r1 = RoomFactory.generateRoom(dungeon.getRooms());
 		r2 = RoomFactory.generateRoom(dungeon.getRooms());
-		assertFalse(r1.neighbors.containsKey(Direction.NORTH));
-		assertFalse(r1.neighbors.containsKey(Direction.EAST));
-		assertFalse(r1.neighbors.containsKey(Direction.WEST));
-		assertFalse(r1.neighbors.containsKey(Direction.SOUTH));
+		assertFalse(r1.getNeighbors().containsKey(Direction.NORTH));
+		assertFalse(r1.getNeighbors().containsKey(Direction.EAST));
+		assertFalse(r1.getNeighbors().containsKey(Direction.WEST));
+		assertFalse(r1.getNeighbors().containsKey(Direction.SOUTH));
 
-		assertFalse(r2.neighbors.containsKey(Direction.NORTH));
-		assertFalse(r2.neighbors.containsKey(Direction.EAST));
-		assertFalse(r2.neighbors.containsKey(Direction.WEST));
-		assertFalse(r2.neighbors.containsKey(Direction.SOUTH));
+		assertFalse(r2.getNeighbors().containsKey(Direction.NORTH));
+		assertFalse(r2.getNeighbors().containsKey(Direction.EAST));
+		assertFalse(r2.getNeighbors().containsKey(Direction.WEST));
+		assertFalse(r2.getNeighbors().containsKey(Direction.SOUTH));
 
 		RoomFactory.connectRoom(r1, Direction.NORTH, r2);
 
-		assertTrue(r1.neighbors.containsKey(Direction.NORTH));
-		assertFalse(r1.neighbors.containsKey(Direction.EAST));
-		assertFalse(r1.neighbors.containsKey(Direction.WEST));
-		assertFalse(r1.neighbors.containsKey(Direction.SOUTH));
-		assertTrue(r2.neighbors.containsKey(Direction.SOUTH));
-		assertFalse(r2.neighbors.containsKey(Direction.EAST));
-		assertFalse(r2.neighbors.containsKey(Direction.WEST));
-		assertFalse(r2.neighbors.containsKey(Direction.NORTH));
+		assertTrue(r1.getNeighbors().containsKey(Direction.NORTH));
+		assertFalse(r1.getNeighbors().containsKey(Direction.EAST));
+		assertFalse(r1.getNeighbors().containsKey(Direction.WEST));
+		assertFalse(r1.getNeighbors().containsKey(Direction.SOUTH));
+		assertTrue(r2.getNeighbors().containsKey(Direction.SOUTH));
+		assertFalse(r2.getNeighbors().containsKey(Direction.EAST));
+		assertFalse(r2.getNeighbors().containsKey(Direction.WEST));
+		assertFalse(r2.getNeighbors().containsKey(Direction.NORTH));
 
-		assertTrue(r1.neighbors.containsKey(Direction.NORTH));
-		assertTrue(r2.neighbors.containsKey(Direction.SOUTH));
+		assertTrue(r1.getNeighbors().containsKey(Direction.NORTH));
+		assertTrue(r2.getNeighbors().containsKey(Direction.SOUTH));
 
-		assertFalse(r1.neighbors.containsKey(Direction.SOUTH));
-		assertFalse(r1.neighbors.containsKey(Direction.EAST));
-		assertFalse(r1.neighbors.containsKey(Direction.WEST));
+		assertFalse(r1.getNeighbors().containsKey(Direction.SOUTH));
+		assertFalse(r1.getNeighbors().containsKey(Direction.EAST));
+		assertFalse(r1.getNeighbors().containsKey(Direction.WEST));
 
-		assertFalse(r2.neighbors.containsKey(Direction.NORTH));
-		assertFalse(r2.neighbors.containsKey(Direction.EAST));
-		assertFalse(r2.neighbors.containsKey(Direction.WEST));
+		assertFalse(r2.getNeighbors().containsKey(Direction.NORTH));
+		assertFalse(r2.getNeighbors().containsKey(Direction.EAST));
+		assertFalse(r2.getNeighbors().containsKey(Direction.WEST));
 
 		// can't connect two room two time
 		RoomFactory.connectRoom(r1, Direction.SOUTH, r2);
-		assertTrue(r1.neighbors.size() < 2);
+		assertTrue(r1.getNeighbors().size() < 2);
 	}
 
 	@org.junit.Test
@@ -261,7 +262,7 @@ public class Test {
 		RoomFactory.connectRoom(r1, Direction.NORTH, r2);
 		dungeon.setEntrance(r1);
 		// init player in room 1
-		dungeon.initPlayer();
+		dungeon.player.setCurrentRoom(dungeon.getEntrance());
 		assertTrue(dungeon.player.getCurrentRoom() == r1);
 		assertTrue(dungeon.player.canGetInRoom(r2));
 		dungeon.executeCommand("n");
@@ -278,7 +279,7 @@ public class Test {
 		r2 = RoomFactory.generateRoom( dungeon.getRooms());
 		r2.setLocked(true);
 		RoomFactory.connectRoom(r1, Direction.EAST, r2);
-		dungeon.initPlayer();
+		dungeon.player.setCurrentRoom(dungeon.getEntrance());
 		assertFalse(dungeon.player.canGetInRoom(r2));
 		dungeon.player.addkey(new Key(2));
 		assertTrue(dungeon.player.canGetInRoom(r2));
@@ -345,52 +346,52 @@ public class Test {
 		dungeon.setRooms(GenerateFromFile.generateDjFromFile(new File("testDjNoExit.txt")));
 		// Room1
 		Room r1 = dungeon.getRooms().get(0);
-		assertTrue(r1.neighbors.containsKey(Direction.NORTH));
-		assertTrue(r1.neighbors.containsKey(Direction.WEST));
-		assertFalse(r1.neighbors.containsKey(Direction.EAST));
-		assertFalse(r1.neighbors.containsKey(Direction.SOUTH));
+		assertTrue(r1.getNeighbors().containsKey(Direction.NORTH));
+		assertTrue(r1.getNeighbors().containsKey(Direction.WEST));
+		assertFalse(r1.getNeighbors().containsKey(Direction.EAST));
+		assertFalse(r1.getNeighbors().containsKey(Direction.SOUTH));
 
 		// Room2
 		Room r2 = dungeon.getRooms().get(1);
-		assertTrue(r2.neighbors.containsKey(Direction.NORTH));
-		assertTrue(r2.neighbors.containsKey(Direction.SOUTH));
-		assertFalse(r2.neighbors.containsKey(Direction.EAST));
-		assertFalse(r2.neighbors.containsKey(Direction.WEST));
+		assertTrue(r2.getNeighbors().containsKey(Direction.NORTH));
+		assertTrue(r2.getNeighbors().containsKey(Direction.SOUTH));
+		assertFalse(r2.getNeighbors().containsKey(Direction.EAST));
+		assertFalse(r2.getNeighbors().containsKey(Direction.WEST));
 
 		// Room3
 		Room r3 = dungeon.getRooms().get(2);
-		assertTrue(r3.neighbors.containsKey(Direction.NORTH));
-		assertTrue(r3.neighbors.containsKey(Direction.EAST));
-		assertFalse(r3.neighbors.containsKey(Direction.WEST));
-		assertFalse(r3.neighbors.containsKey(Direction.SOUTH));
+		assertTrue(r3.getNeighbors().containsKey(Direction.NORTH));
+		assertTrue(r3.getNeighbors().containsKey(Direction.EAST));
+		assertFalse(r3.getNeighbors().containsKey(Direction.WEST));
+		assertFalse(r3.getNeighbors().containsKey(Direction.SOUTH));
 
 		// Room4
 		Room r4 = dungeon.getRooms().get(3);
-		assertTrue(r4.neighbors.containsKey(Direction.NORTH));
-		assertTrue(r4.neighbors.containsKey(Direction.WEST));
-		assertTrue(r4.neighbors.containsKey(Direction.SOUTH));
-		assertFalse(r4.neighbors.containsKey(Direction.EAST));
+		assertTrue(r4.getNeighbors().containsKey(Direction.NORTH));
+		assertTrue(r4.getNeighbors().containsKey(Direction.WEST));
+		assertTrue(r4.getNeighbors().containsKey(Direction.SOUTH));
+		assertFalse(r4.getNeighbors().containsKey(Direction.EAST));
 
 		// Room5
 		Room r5 = dungeon.getRooms().get(4);
-		assertTrue(r5.neighbors.containsKey(Direction.SOUTH));
-		assertFalse(r5.neighbors.containsKey(Direction.WEST));
-		assertFalse(r5.neighbors.containsKey(Direction.EAST));
-		assertFalse(r5.neighbors.containsKey(Direction.NORTH));
+		assertTrue(r5.getNeighbors().containsKey(Direction.SOUTH));
+		assertFalse(r5.getNeighbors().containsKey(Direction.WEST));
+		assertFalse(r5.getNeighbors().containsKey(Direction.EAST));
+		assertFalse(r5.getNeighbors().containsKey(Direction.NORTH));
 
 		// Room6
 		Room r6 = dungeon.getRooms().get(5);
-		assertTrue(r6.neighbors.containsKey(Direction.EAST));
-		assertFalse(r6.neighbors.containsKey(Direction.WEST));
-		assertFalse(r6.neighbors.containsKey(Direction.NORTH));
-		assertFalse(r6.neighbors.containsKey(Direction.SOUTH));
+		assertTrue(r6.getNeighbors().containsKey(Direction.EAST));
+		assertFalse(r6.getNeighbors().containsKey(Direction.WEST));
+		assertFalse(r6.getNeighbors().containsKey(Direction.NORTH));
+		assertFalse(r6.getNeighbors().containsKey(Direction.SOUTH));
 
 		// Room7
 		Room r7 = dungeon.getRooms().get(6);
-		assertTrue(r7.neighbors.containsKey(Direction.SOUTH));
-		assertFalse(r7.neighbors.containsKey(Direction.WEST));
-		assertFalse(r7.neighbors.containsKey(Direction.EAST));
-		assertFalse(r7.neighbors.containsKey(Direction.NORTH));
+		assertTrue(r7.getNeighbors().containsKey(Direction.SOUTH));
+		assertFalse(r7.getNeighbors().containsKey(Direction.WEST));
+		assertFalse(r7.getNeighbors().containsKey(Direction.EAST));
+		assertFalse(r7.getNeighbors().containsKey(Direction.NORTH));
 
 	}
 

@@ -26,7 +26,7 @@ public class EnigmaRoom extends Room {
 			ArrayList<Question> questions = GenerateFromFile.getAllQuestions("lib_questions.txt");
 			question = getRandomQuestion(questions);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 
 	}

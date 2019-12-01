@@ -112,17 +112,17 @@ public class RoomFactory {
 		}
 		//usefull when we load the dj from a file
 		if(!room.alreadyConnected(room2) && room.getNextRoom(dir) == null){
-			room.neighbors.put(dir, room2);
+			room.getNeighbors().put(dir, room2);
 			if(dir == Direction.NORTH)
-				room2.neighbors.put(Direction.SOUTH, room);
+				room2.getNeighbors().put(Direction.SOUTH, room);
 			else if(dir == Direction.EAST)
-				room2.neighbors.put(Direction.WEST, room);
+				room2.getNeighbors().put(Direction.WEST, room);
 
 			else if(dir == Direction.SOUTH)
-				room2.neighbors.put(Direction.NORTH, room);
+				room2.getNeighbors().put(Direction.NORTH, room);
 
 			else if(dir == Direction.WEST)
-				room2.neighbors.put(Direction.EAST, room);
+				room2.getNeighbors().put(Direction.EAST, room);
 		}
 	}
 

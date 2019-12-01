@@ -4,8 +4,6 @@ import java.util.Random;
 public enum Direction {
 	NORTH, EAST, SOUTH, WEST;
 	
-	private static Random random = new Random();
-	
 	public static Direction chooseDirection(int index) {
 		Direction direction;
 		switch (index) {
@@ -29,6 +27,7 @@ public enum Direction {
 	}
 	
     public static Direction getRandomDirection() {
+    	Random random = new Random();
         return values()[random.nextInt(values().length)];
     }
 }

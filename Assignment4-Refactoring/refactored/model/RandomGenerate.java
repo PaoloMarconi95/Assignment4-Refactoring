@@ -12,7 +12,6 @@ import rooms.Room;
 import rooms.RoomFactory;
 
 public class RandomGenerate {
-	public static boolean keyOnPath = false;
 
 	public static ArrayList<Room> generate(int size) throws DungeonTooSmallException{
 		if(size<4)
@@ -38,7 +37,7 @@ public class RandomGenerate {
 	public static void getFirstRoomLockedFrom(Room room, ArrayList<Room> list, ArrayList<Room> parcours){	
 		parcours.add(room);
 		if(list.isEmpty()){
-			for(Entry<Direction, Room> entry : room.neighbors.entrySet()) {
+			for(Entry<Direction, Room> entry : room.getNeighbors().entrySet()) {
 				Room next = entry.getValue();
 				if(next.isLocked())
 					list.add(next);
@@ -52,7 +51,7 @@ public class RandomGenerate {
 
 	public static void getConnectedRoom(Room room, ArrayList<Room> list){
 
-		for(Entry<Direction, Room> entry : room.neighbors.entrySet()) {
+		for(Entry<Direction, Room> entry : room.getNeighbors().entrySet()) {
 			Room current = entry.getValue();
 			if(!list.contains(current) && !current.isLocked() ){
 				list.add(current);

@@ -14,7 +14,7 @@ import rooms.Room;
 
 public class Player {
 	
-	public static int default_health = 100;
+	public static final int default_health = 100;
 	
 	private int health;
 	private Torch torch = new Torch();
@@ -152,7 +152,7 @@ public class Player {
 
 	private void printDirections(){
 		String possibleDirections = "";
-		for(Map.Entry<Direction, Room> entry : currentRoom.neighbors.entrySet()) {
+		for(Map.Entry<Direction, Room> entry : currentRoom.getNeighbors().entrySet()) {
 			Direction direction = entry.getKey();
 			possibleDirections += direction +"\n";
 		}

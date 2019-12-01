@@ -15,15 +15,14 @@ public class FileParser {
 
 	FileParser(File file) {
 		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-			String actual_line;
-			String line_from_file = br.readLine();
-			while ((actual_line = line_from_file) != null) {
-				allLine.add(actual_line);
+			String line = br.readLine();
+			while ((line = br.readLine()) != null) {
+				allLine.add(line);
 			}
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 	}
 

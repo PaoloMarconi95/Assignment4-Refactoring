@@ -18,7 +18,15 @@ public class Room {
 	private boolean hasPotion = false;
 	private Key key = null;
 
-	public HashMap<Direction, Room> neighbors;
+	private HashMap<Direction, Room> neighbors;
+
+	public HashMap<Direction, Room> getNeighbors() {
+		return neighbors;
+	}
+
+	public void setNeighbors(HashMap<Direction, Room> neighbors) {
+		this.neighbors = neighbors;
+	}
 
 	public Room(int number){
 		this.number = number;
