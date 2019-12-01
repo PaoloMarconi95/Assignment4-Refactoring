@@ -153,10 +153,10 @@ public class RandomGenerate {
 
 		for (int j = 0; j < toExtends.size(); j++) {
 			Room current = toExtends.get(j);
-			Direction dir = getRandomDirection();
+			Direction dir = Direction.getRandomDirection();
 			//while we don't find a empty direction to connect the current room to the previous room
 			while(current.getNextRoom(dir)!= null)
-				dir = getRandomDirection();
+				dir = Direction.getRandomDirection();
 			try {
 				Room newRoom;
 				if(!monster){
@@ -213,18 +213,18 @@ public class RandomGenerate {
 			beforeExit = Math.random()*101 > 50 ? 	RoomFactory.generateRoom("Normal", rooms) : 
 				RoomFactory.generateRoom("Glouton", rooms);
 
-			RoomFactory.connectRoom(exit, getRandomDirection(), beforeExit);
+			RoomFactory.connectRoom(exit, Direction.getRandomDirection(), beforeExit);
 
 			for (int i = 2; i < size; i++) {
 				//TODO maybe add a random for different room type
 				Room current = RoomFactory.generateRoom("Normal", rooms);
 				//get the room before in the arraylist (to make one path to the exit)
 				Room before = rooms.get(current.getNumero()-2);
-				Direction dir = getRandomDirection();
-				//while we don't find a empty direction to connect the current room to the previous room
-				while(before.getNextRoom(dir)!= null)
-					dir = getRandomDirection();
-				RoomFactory.connectRoom(before, dir, current);
+				Direction direction = Direction.getRandomDirection();
+				//while we don't find an empty direction to connect the current room to the previous room
+				while(before.getNextRoom(direction)!= null)
+					direction = Direction.getRandomDirection();
+				RoomFactory.connectRoom(before, direction, current);
 				if(i == size-1)
 					current.setEntrance(true);
 			}
@@ -232,19 +232,6 @@ public class RandomGenerate {
 			e.printStackTrace();
 		}
 	}
-
-	private static Direction getRandomDirection() {
-		int alea = (int) (Math.random()*101);
-		if(alea < 25)
-			return Direction.NORTH;
-		else if(alea < 50)
-			return Direction.EAST;
-		else if(alea < 75)
-			return Direction.SOUTH;
-		else
-			return Direction.WEST;
-	}
-
 
 
 	public static void main(String[] args) {

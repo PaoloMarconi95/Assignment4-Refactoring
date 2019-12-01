@@ -1,4 +1,5 @@
 package model;
+import java.util.Random;
 
 public enum Direction {
 	NORTH, EAST, SOUTH, WEST;
@@ -24,4 +25,9 @@ public enum Direction {
 		}
 		return direction;
 	}
+	
+    public static Direction getRandomDirection() {
+        Random random = new Random();
+        return values()[random.nextInt(values().length)];
+    }
 }
