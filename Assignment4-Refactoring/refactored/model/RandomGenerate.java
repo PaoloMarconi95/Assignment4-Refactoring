@@ -123,16 +123,12 @@ public class RandomGenerate {
 	}
 
 
-
-
-
 	private static void generateLabyPath(int size, ArrayList<Room> rooms) {
 		for (int i = 0; i < size; i++) {
 			extendDj(rooms, i%2);
 		}
 	}
-
-
+	
 
 	private static void extendDj(ArrayList<Room> rooms, int i) {
 		ArrayList<Room> toExtends = new ArrayList<Room>();
@@ -225,47 +221,5 @@ public class RandomGenerate {
 			if(i == size-1)
 				current.setEntrance(true);
 		}
-	}
-
-
-	public static void main(String[] args) {
-		ArrayList<Room> list = new ArrayList<Room>();
-		ArrayList<Room> locked = new ArrayList<Room>();
-		ArrayList<Room> parcours = new ArrayList<Room>();
-		try {
-			Room r1 = RoomFactory.generateRoom(list);
-			Room r2 = RoomFactory.generateRoom(list);
-			Room r3 = RoomFactory.generateRoom(list);
-			Room r4 = RoomFactory.generateRoom(list);
-			Room r5 = RoomFactory.generateRoom(list);
-			Room r6 = RoomFactory.generateRoom(list);
-			Room r7 = RoomFactory.generateRoom(list);
-
-			RoomFactory.connectRoom(r1, Direction.NORTH, r2);
-			RoomFactory.connectRoom(r2, Direction.NORTH, r3);
-			RoomFactory.connectRoom(r3, Direction.NORTH, r4);
-			RoomFactory.connectRoom(r4, Direction.NORTH, r5);
-			RoomFactory.connectRoom(r3, Direction.EAST, r6);
-			RoomFactory.connectRoom(r6, Direction.EAST, r7);
-			r6.setLocked(true);
-			r7.setLocked(true);
-
-			Room test;
-			getFirstRoomLockedFrom(r1, locked, parcours);
-
-			test = locked.get(0);
-			System.out.println(test.getNumber());
-			System.out.println(test.toString());
-			System.out.println("------------------");
-
-			Dungeon dg = new Dungeon(6);
-			for(Room r : dg.getRooms())
-				System.out.println(r.toString());
-
-		} catch (DungeonTooSmallException | MissingExitRoomException | MissingEntranceRoomException e) {
-			e.printStackTrace();
-		}
-	} 
-	
-	
+	}	
 }
