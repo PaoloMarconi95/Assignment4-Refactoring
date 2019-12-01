@@ -23,12 +23,7 @@ import model.RandomGenerate;
 import monsters.Arakne;
 import monsters.Monster;
 import monsters.Vampire;
-import rooms.EnigmaRoom;
-import rooms.MonsterRoom;
-import rooms.Question;
-import rooms.Room;
-import rooms.RoomFactory;
-import rooms.TrapRoom;
+import rooms.*;
 import exceptions.CorruptedFileException;
 import exceptions.DungeonTooSmallException;
 import exceptions.MissingEntranceRoomException;
@@ -67,7 +62,7 @@ public class Test {
 			r = locked.get(0);
 		else
 			r = null;
-		assertEquals(6, r.getNumero());
+		assertEquals(6, r.getNumber());
 
 	}
 

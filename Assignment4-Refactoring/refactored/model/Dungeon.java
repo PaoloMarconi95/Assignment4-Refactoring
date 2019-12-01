@@ -4,10 +4,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import rooms.Room;
 import exceptions.DungeonTooSmallException;
 import exceptions.MissingEntranceRoomException;
 import exceptions.MissingExitRoomException;
+import rooms.Room;
 
 
 public class Dungeon {

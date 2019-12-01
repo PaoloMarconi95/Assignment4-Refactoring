@@ -1,10 +1,5 @@
 package items;
 
-import java.util.Map.Entry;
-
-import model.Direction;
-import rooms.Room;
-
 
 public class Torch {
 	private static final int	MAX_FIRE	= 20;
