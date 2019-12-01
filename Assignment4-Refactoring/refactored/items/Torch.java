@@ -15,10 +15,7 @@ public class Torch {
 	}
 
 	public boolean empty(){
-		if(fire <= 0)
-			return true;
-		else
-			return false;
+		return fire <= 0;
 	}
 
 	public void extinguish() {

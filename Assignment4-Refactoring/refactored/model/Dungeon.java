@@ -16,13 +16,13 @@ public class Dungeon {
 	public final Player player = new Player();
 	private boolean	playerMoved	= true;
 
-	private ArrayList<Room>	rooms = new ArrayList<Room>();
-	private String line;
-	private Room entrance, exit;
-	public static final int random_init_min_arg = 4;
-	public static final int random_init_max_arg = 7;
-	public static final int not_random_init_min_arg = 1;
-	public static final int not_random_init_max_arg = 4;
+	private ArrayList<Room>	rooms = new ArrayList<>();
+	private Room entrance; 
+	private Room exit;
+	public static final int RANDOM_INIT_MIN_ARG = 4;
+	public static final int RANDOM_INIT_MAX_ARG = 7;
+	public static final int NOT_RANDOM_INIT_MIN_ARG = 1;
+	public static final int NOT_RANDOM_INIT_MAX_ARG = 4;
 
 	public Dungeon(){
 	}
@@ -61,7 +61,7 @@ public class Dungeon {
 		if (playerMoved) {
 			player.useTorch();
 		}
-		line = scanner.nextLine();
+		String line = scanner.nextLine();
 		executeCommand(line.toLowerCase());
 		player.getCurrentRoom().act(player);
 
