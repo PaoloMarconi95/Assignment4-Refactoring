@@ -58,11 +58,12 @@ public class Test {
 
 		r6.setLocked(true);
 		RandomGenerate.getFirstRoomLockedFrom(r1, locked, parcours);
-		Room r;
+		Room r ;
 		if(!locked.isEmpty())
 			r = locked.get(0);
 		else
 			r = null;
+		assertTrue(r != null);
 		assertEquals(6, r.getNumber());
 
 	}

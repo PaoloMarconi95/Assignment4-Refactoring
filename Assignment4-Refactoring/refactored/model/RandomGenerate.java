@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.Map.Entry;
 
 import exceptions.DungeonTooSmallException;
-import exceptions.MissingEntranceRoomException;
-import exceptions.MissingExitRoomException;
 import exceptions.UnknowRoomTypeException;
 import items.Key;
 import monsters.Glouton;
