@@ -4,11 +4,7 @@ import java.util.ArrayList;
 
 import exceptions.UnknowRoomTypeException;
 import model.Direction;
-import monsters.Arakne;
-import monsters.Glouton;
-import monsters.Gnome;
-import monsters.Troll;
-import monsters.Vampire;
+import monsters.*;
 
 
 public class RoomFactory {
@@ -18,13 +14,13 @@ public class RoomFactory {
 		int alea = (int) (Math.random() * 101);
 		Room room;
 		if(alea < 15)
-			room = RoomFactory.generateRoom("Trap", rooms);
+			room = RoomFactory.generateTrapRoom(rooms);
 		else if(alea < 25)
-			room = RoomFactory.generateRoom("Enigma", rooms);
+			room = RoomFactory.generateEnigmaRoom(rooms);
 		else if(alea < 35)
 		room = generateRandomMonsterRoom(rooms);
 		else
-			room = RoomFactory.generateRoom("Normal", rooms);
+			room = RoomFactory.generateRoom(rooms);
 		if(Math.random()*101 > 65)
 			room.setHasTorch(true);
 		if(Math.random()*101 > 85)
@@ -33,39 +29,75 @@ public class RoomFactory {
 	}
 
 
-	public static Room generateRoom(String s, ArrayList<Room> rooms) throws UnknowRoomTypeException{
-		Room r = null;
-
-		if(s.equals("Enigma"))
-			r = new EnigmaRoom(rooms.size() + 1);
-		else if(s.equals("Normal"))
-			r = new Room(rooms.size() + 1);
-		else if(s.equals("Exit")){
-			r = new Room(rooms.size() + 1);
-			r.setExit(true);	
-		}
-		else if(s.equals("Entrance")){
-			r = new Room(rooms.size() + 1);
-			r.setEntrance(true);	
-		}
-		else if(s.equals("Arakne"))
-			r = new MonsterRoom(rooms.size() + 1, new Arakne());
-		else if(s.equals("Glouton"))
-			r = new MonsterRoom(rooms.size() + 1, new Glouton());
-		else if(s.equals("Gnome"))
-			r = new MonsterRoom(rooms.size() + 1, new Gnome());
-		else if(s.equals("Vampire"))
-			r = new MonsterRoom(rooms.size() + 1, new Vampire());
-		else if(s.equals("Troll"))
-			r = new MonsterRoom(rooms.size() + 1, new Troll());
-		else if(s.equals("Trap"))
-			r = new TrapRoom(rooms.size() + 1);
-		else
-			throw new UnknowRoomTypeException();
-		rooms.add(r);
-
-		return r;
+	/**
+	 * Generate NORMAL room
+	 * @param rooms: list of rooms already existing
+	 * @return new room
+	 */
+	public static Room generateRoom(ArrayList<Room> rooms){
+		Room room = new Room(rooms.size() + 1);
+		rooms.add(room);
+		return room;
 	}
+
+	/**
+	 * Generate MONSTER room
+	 * @param rooms: list of rooms already existing
+	 * @param monster: monster in the room
+	 * @return new monster room
+	 */
+	public static Room generateMonsterRoom(ArrayList<Room> rooms, Monster monster){
+		Room room = new MonsterRoom(rooms.size() + 1, monster);
+		rooms.add(room);
+		return room;
+	}
+
+	/**
+	 * Generate ENIGMA room
+	 * @param rooms: list of rooms already existing
+	 * @return new enigma room
+	 */
+	public static Room generateEnigmaRoom(ArrayList<Room> rooms){
+		Room room = new EnigmaRoom(rooms.size() + 1);
+		rooms.add(room);
+		return room;
+	}
+
+	/**
+	 * Generate TRAP room
+	 * @param rooms: list of rooms already existing
+	 * @return new trap room
+	 */
+	public static Room generateTrapRoom(ArrayList<Room> rooms){
+		Room room = new TrapRoom(rooms.size() + 1);
+		rooms.add(room);
+		return room;
+	}
+
+	/**
+	 * Generate EXIT room
+	 * @param rooms: list of rooms already existing
+	 * @return new exit room
+	 */
+	public static Room generateExitRoom(ArrayList<Room> rooms){
+		Room room = new Room(rooms.size() + 1);
+		room.setExit(true);
+		rooms.add(room);
+		return room;
+	}
+
+	/**
+	 * Generate ENTRANCE room
+	 * @param rooms: list of rooms already existing
+	 * @return new entrance room
+	 */
+	public static Room generateEntranceRoom(ArrayList<Room> rooms){
+		Room room = new Room(rooms.size() + 1);
+		room.setEntrance(true);
+		rooms.add(room);
+		return room;
+	}
+
 
 	/**
 	 * @param room the first room we have
@@ -97,22 +129,16 @@ public class RoomFactory {
 
 	public static Room generateRandomMonsterRoom(ArrayList<Room> rooms) {
 		int alea = (int) (Math.random() * 101);
-		try {
-			if(alea < 30)
-				return RoomFactory.generateRoom("Glouton", rooms);
-			else if(alea < 55)
-				return RoomFactory.generateRoom("Arakne", rooms);
-			else if(alea < 75)
-				return RoomFactory.generateRoom("Gnome", rooms);
-			else if(alea < 90)
-				return RoomFactory.generateRoom("Vampire", rooms);
-			else 
-				return RoomFactory.generateRoom("Troll", rooms);
-
-		} catch (UnknowRoomTypeException e) {
-			e.printStackTrace();
-			return null;
-		}
+		if(alea < 30)
+			return RoomFactory.generateMonsterRoom(rooms, new Glouton());
+		else if(alea < 55)
+			return RoomFactory.generateMonsterRoom(rooms, new Arakne());
+		else if(alea < 75)
+			return RoomFactory.generateMonsterRoom(rooms, new Gnome());
+		else if(alea < 90)
+			return RoomFactory.generateMonsterRoom(rooms, new Vampire());
+		else
+			return RoomFactory.generateMonsterRoom(rooms, new Troll());
 	}
 
 

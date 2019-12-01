@@ -9,6 +9,7 @@ import exceptions.MissingEntranceRoomException;
 import exceptions.MissingExitRoomException;
 import exceptions.UnknowRoomTypeException;
 import items.Key;
+import monsters.Glouton;
 import rooms.Room;
 import rooms.RoomFactory;
 
@@ -161,7 +162,7 @@ public class RandomGenerate {
 					monster = true;
 				}
 				else if(!sphinx){
-					newRoom = RoomFactory.generateRoom("Enigma", rooms);
+					newRoom = RoomFactory.generateEnigmaRoom(rooms);
 					sphinx = true;
 				}
 				else
@@ -202,31 +203,27 @@ public class RandomGenerate {
 	 */
 	public static void generateLinearDj(int size, ArrayList<Room> rooms) {
 
-		try {
-			Room exit = RoomFactory.generateRoom("Exit", rooms);
-			exit.setLocked(true);
-			Room beforeExit;
+		Room exit = RoomFactory.generateExitRoom(rooms);
+		exit.setLocked(true);
+		Room beforeExit;
 
-			beforeExit = Math.random()*101 > 50 ? 	RoomFactory.generateRoom("Normal", rooms) : 
-				RoomFactory.generateRoom("Glouton", rooms);
+		beforeExit = Math.random()*101 > 50 ? 	RoomFactory.generateRoom(rooms) :
+			RoomFactory.generateMonsterRoom(rooms, new Glouton());
 
-			RoomFactory.connectRoom(exit, Direction.getRandomDirection(), beforeExit);
+		RoomFactory.connectRoom(exit, Direction.getRandomDirection(), beforeExit);
 
-			for (int i = 2; i < size; i++) {
-				//TODO maybe add a random for different room type
-				Room current = RoomFactory.generateRoom("Normal", rooms);
-				//get the room before in the arraylist (to make one path to the exit)
-				Room before = rooms.get(current.getNumber()-2);
-				Direction direction = Direction.getRandomDirection();
-				//while we don't find an empty direction to connect the current room to the previous room
-				while(before.getNextRoom(direction)!= null)
-					direction = Direction.getRandomDirection();
-				RoomFactory.connectRoom(before, direction, current);
-				if(i == size-1)
-					current.setEntrance(true);
-			}
-		} catch (UnknowRoomTypeException e) {
-			e.printStackTrace();
+		for (int i = 2; i < size; i++) {
+			//TODO maybe add a random for different room type
+			Room current = RoomFactory.generateRoom(rooms);
+			//get the room before in the arraylist (to make one path to the exit)
+			Room before = rooms.get(current.getNumber()-2);
+			Direction direction = Direction.getRandomDirection();
+			//while we don't find an empty direction to connect the current room to the previous room
+			while(before.getNextRoom(direction)!= null)
+				direction = Direction.getRandomDirection();
+			RoomFactory.connectRoom(before, direction, current);
+			if(i == size-1)
+				current.setEntrance(true);
 		}
 	}
 
@@ -236,13 +233,13 @@ public class RandomGenerate {
 		ArrayList<Room> locked = new ArrayList<Room>();
 		ArrayList<Room> parcours = new ArrayList<Room>();
 		try {
-			Room r1 = RoomFactory.generateRoom("Normal",list);
-			Room r2 = RoomFactory.generateRoom("Normal",list);
-			Room r3 = RoomFactory.generateRoom("Normal",list);
-			Room r4 = RoomFactory.generateRoom("Normal",list);
-			Room r5 = RoomFactory.generateRoom("Normal",list);
-			Room r6 = RoomFactory.generateRoom("Normal",list);
-			Room r7 = RoomFactory.generateRoom("Normal",list);
+			Room r1 = RoomFactory.generateRoom(list);
+			Room r2 = RoomFactory.generateRoom(list);
+			Room r3 = RoomFactory.generateRoom(list);
+			Room r4 = RoomFactory.generateRoom(list);
+			Room r5 = RoomFactory.generateRoom(list);
+			Room r6 = RoomFactory.generateRoom(list);
+			Room r7 = RoomFactory.generateRoom(list);
 
 			RoomFactory.connectRoom(r1, Direction.NORTH, r2);
 			RoomFactory.connectRoom(r2, Direction.NORTH, r3);
@@ -265,7 +262,7 @@ public class RandomGenerate {
 			for(Room r : dg.getRooms())
 				System.out.println(r.toString());
 
-		} catch (UnknowRoomTypeException | DungeonTooSmallException | MissingExitRoomException | MissingEntranceRoomException e) {
+		} catch (DungeonTooSmallException | MissingExitRoomException | MissingEntranceRoomException e) {
 			e.printStackTrace();
 		}
 	} 

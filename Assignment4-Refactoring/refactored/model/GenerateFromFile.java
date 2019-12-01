@@ -4,8 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 
 import exceptions.CorruptedFileException;
-import exceptions.UnknowRoomTypeException;
 import items.Key;
+import monsters.*;
 import rooms.Question;
 import rooms.Room;
 import rooms.RoomFactory;
@@ -45,21 +45,42 @@ public class GenerateFromFile {
 	}
 
 	private static void createRooms(ArrayList<String[]> roomList, ArrayList<Room> rooms) {
-		Room r;
 		for (String[] strings : roomList) {
-			// String[5] must contains the type of the room
-			try {
-				r = RoomFactory.generateRoom(strings[5], rooms);
-				if (!strings[6].equals("*"))
-					r.setKey(new Key(Integer.parseInt(strings[6])));
-				if (strings[7].equals("TRUE"))
-					r.setHasTorch(true);
-				if (strings[8].equals("TRUE"))
-					r.setLocked(true);
-			} catch (UnknowRoomTypeException e) {
-				e.printStackTrace();
-			}
+			Room r = checkRoomType(strings[5], rooms);
+			if (!strings[6].equals("*"))
+				r.setKey(new Key(Integer.parseInt(strings[6])));
+			if (strings[7].equals("TRUE"))
+				r.setHasTorch(true);
+			if (strings[8].equals("TRUE"))
+				r.setLocked(true);
 		}
+	}
+
+	private static Room checkRoomType(String s, ArrayList<Room> rooms){
+		Room r;
+		// String[5] must contains the type of the room
+		if(s.equals("Entrance")){
+			r = RoomFactory.generateEntranceRoom(rooms);
+		} else if(s.equals("Exit")){
+			r = RoomFactory.generateExitRoom(rooms);
+		} else if(s.equals("Enigma")){
+			r = RoomFactory.generateEnigmaRoom(rooms);
+		} else if(s.equals("Trap")){
+			r = RoomFactory.generateTrapRoom(rooms);
+		} else if(s.equals("Arakne")){
+			r = RoomFactory.generateMonsterRoom(rooms, new Arakne());
+		} else if(s.equals("Glouton")){
+			r = RoomFactory.generateMonsterRoom(rooms, new Glouton());
+		} else if(s.equals("Gnome")){
+			r = RoomFactory.generateMonsterRoom(rooms, new Gnome());
+		} else if(s.equals("Troll")){
+			r = RoomFactory.generateMonsterRoom(rooms, new Troll());
+		} else if(s.equals("Vampire")){
+			r = RoomFactory.generateMonsterRoom(rooms, new Vampire());
+		} else {
+			r = RoomFactory.generateRoom(rooms);
+		}
+		return r;
 	}
 
 	private static void connectRooms(ArrayList<String[]> roomList, ArrayList<Room> rooms) {

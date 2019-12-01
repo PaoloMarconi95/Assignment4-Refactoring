@@ -38,24 +38,36 @@ public class Room {
 		if(isExit())
 			System.out.println("Congratulation ! You escaped from the dungeon");
 		else 
-			checkItem(p);
+			checkForItems(p);
 	}
 
 	protected void displayNum() {
-		System.out.println("Room n�"+number);
+		System.out.println("Room n."+number);
 	}
 
-	public void checkItem(Player p){
+	public void checkForItems(Player p){
+		checkForKey(p);
+		checkForTorch(p);
+		checkForPotion(p);
+	}
+
+	public void checkForKey(Player p){
 		if(getKey() != null ){
 			System.out.println("You picked up a key ! ("+getKey().ROOM_NUMBER+")");
 			p.getKeyring().add(getKey());
 			setKey(null);
 		}
+	}
+
+	public void checkForTorch(Player p){
 		if(hasTorch){
 			hasTorch = false;
 			System.out.println("You picked up a torch !");
 			p.getTorch().reload();
 		}
+	}
+
+	public void checkForPotion(Player p){
 		if(hasPotion){
 			hasPotion = false;
 			System.out.println("You picked up a health potion !");
@@ -149,11 +161,9 @@ public class Room {
 		else
 			s+= " UNLOCKED";
 		if(key != null)
-			s+=" key n�"+key.ROOM_NUMBER;
+			s+=" key n."+key.ROOM_NUMBER;
 		else
 			s+=" no key";
-
-
 		return s;
 	}
 
@@ -168,10 +178,6 @@ public class Room {
 		if (neighbors.containsKey(Direction.WEST)) 
 			i++;
 		return i;
-	}
-
-	public boolean isHasPotion() {
-		return hasPotion;
 	}
 
 	public void setHasPotion(boolean hasPotion) {

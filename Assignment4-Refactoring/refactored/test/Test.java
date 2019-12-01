@@ -21,6 +21,7 @@ import model.GenerateFromFile;
 import model.Player;
 import model.RandomGenerate;
 import monsters.Arakne;
+import monsters.Glouton;
 import monsters.Monster;
 import monsters.Vampire;
 import rooms.*;
@@ -42,12 +43,12 @@ public class Test {
 		ArrayList<Room> locked = new ArrayList<Room>();
 		ArrayList<Room> parcours = new ArrayList<Room>();
 		
-		Room r1 = RoomFactory.generateRoom("Normal",list);
-		Room r2 = RoomFactory.generateRoom("Normal",list);
-		Room r3 = RoomFactory.generateRoom("Normal",list);
-		Room r4 = RoomFactory.generateRoom("Normal",list);
-		Room r5 = RoomFactory.generateRoom("Normal",list);
-		Room r6 = RoomFactory.generateRoom("Normal",list);
+		Room r2 = RoomFactory.generateRoom(list);
+		Room r3 = RoomFactory.generateRoom(list);
+		Room r4 = RoomFactory.generateRoom(list);
+		Room r5 = RoomFactory.generateRoom(list);
+		Room r1 = RoomFactory.generateRoom(list);
+		Room r6 = RoomFactory.generateRoom(list);
 
 		RoomFactory.connectRoom(r1, Direction.NORTH, r2);
 		RoomFactory.connectRoom(r2, Direction.NORTH, r3);
@@ -211,142 +212,124 @@ public class Test {
 		Dungeon dungeon = new Dungeon();
 		Room r1;
 		Room r2;
-		try {
-			r1 = RoomFactory.generateRoom("Normal", dungeon.getRooms());
-			r2 = RoomFactory.generateRoom("Normal", dungeon.getRooms());
-			assertFalse(r1.neighbors.containsKey(Direction.NORTH));
-			assertFalse(r1.neighbors.containsKey(Direction.EAST));
-			assertFalse(r1.neighbors.containsKey(Direction.WEST));
-			assertFalse(r1.neighbors.containsKey(Direction.SOUTH));
+		r1 = RoomFactory.generateRoom(dungeon.getRooms());
+		r2 = RoomFactory.generateRoom(dungeon.getRooms());
+		assertFalse(r1.neighbors.containsKey(Direction.NORTH));
+		assertFalse(r1.neighbors.containsKey(Direction.EAST));
+		assertFalse(r1.neighbors.containsKey(Direction.WEST));
+		assertFalse(r1.neighbors.containsKey(Direction.SOUTH));
 
-			assertFalse(r2.neighbors.containsKey(Direction.NORTH));
-			assertFalse(r2.neighbors.containsKey(Direction.EAST));
-			assertFalse(r2.neighbors.containsKey(Direction.WEST));
-			assertFalse(r2.neighbors.containsKey(Direction.SOUTH));
+		assertFalse(r2.neighbors.containsKey(Direction.NORTH));
+		assertFalse(r2.neighbors.containsKey(Direction.EAST));
+		assertFalse(r2.neighbors.containsKey(Direction.WEST));
+		assertFalse(r2.neighbors.containsKey(Direction.SOUTH));
 
-			RoomFactory.connectRoom(r1, Direction.NORTH, r2);
+		RoomFactory.connectRoom(r1, Direction.NORTH, r2);
 
-			assertTrue(r1.neighbors.containsKey(Direction.NORTH));
-			assertFalse(r1.neighbors.containsKey(Direction.EAST));
-			assertFalse(r1.neighbors.containsKey(Direction.WEST));
-			assertFalse(r1.neighbors.containsKey(Direction.SOUTH));
-			assertTrue(r2.neighbors.containsKey(Direction.SOUTH));
-			assertFalse(r2.neighbors.containsKey(Direction.EAST));
-			assertFalse(r2.neighbors.containsKey(Direction.WEST));
-			assertFalse(r2.neighbors.containsKey(Direction.NORTH));
+		assertTrue(r1.neighbors.containsKey(Direction.NORTH));
+		assertFalse(r1.neighbors.containsKey(Direction.EAST));
+		assertFalse(r1.neighbors.containsKey(Direction.WEST));
+		assertFalse(r1.neighbors.containsKey(Direction.SOUTH));
+		assertTrue(r2.neighbors.containsKey(Direction.SOUTH));
+		assertFalse(r2.neighbors.containsKey(Direction.EAST));
+		assertFalse(r2.neighbors.containsKey(Direction.WEST));
+		assertFalse(r2.neighbors.containsKey(Direction.NORTH));
 
-			assertTrue(r1.neighbors.containsKey(Direction.NORTH));
-			assertTrue(r2.neighbors.containsKey(Direction.SOUTH));
+		assertTrue(r1.neighbors.containsKey(Direction.NORTH));
+		assertTrue(r2.neighbors.containsKey(Direction.SOUTH));
 
-			assertFalse(r1.neighbors.containsKey(Direction.SOUTH));
-			assertFalse(r1.neighbors.containsKey(Direction.EAST));
-			assertFalse(r1.neighbors.containsKey(Direction.WEST));
+		assertFalse(r1.neighbors.containsKey(Direction.SOUTH));
+		assertFalse(r1.neighbors.containsKey(Direction.EAST));
+		assertFalse(r1.neighbors.containsKey(Direction.WEST));
 
-			assertFalse(r2.neighbors.containsKey(Direction.NORTH));
-			assertFalse(r2.neighbors.containsKey(Direction.EAST));
-			assertFalse(r2.neighbors.containsKey(Direction.WEST));
+		assertFalse(r2.neighbors.containsKey(Direction.NORTH));
+		assertFalse(r2.neighbors.containsKey(Direction.EAST));
+		assertFalse(r2.neighbors.containsKey(Direction.WEST));
 
-			// can't connect two room two time
-			RoomFactory.connectRoom(r1, Direction.SOUTH, r2);
-			assertTrue(r1.neighbors.size() < 2);
-		} catch (UnknowRoomTypeException e) {
-			e.printStackTrace();
-		}
+		// can't connect two room two time
+		RoomFactory.connectRoom(r1, Direction.SOUTH, r2);
+		assertTrue(r1.neighbors.size() < 2);
 	}
 
 	@org.junit.Test
 	public void testPlayerMove() {
 		Dungeon dungeon = new Dungeon();
 		Room r1, r2;
-		try {
-			r1 = RoomFactory.generateRoom("Normal", dungeon.getRooms());
-			r2 = RoomFactory.generateRoom("Normal", dungeon.getRooms());
-			RoomFactory.connectRoom(r1, Direction.NORTH, r2);
-			dungeon.setEntrance(r1);
-			// init player in room 1
-			dungeon.initPlayer();
-			assertTrue(dungeon.player.getCurrentRoom() == r1);
-			assertTrue(dungeon.player.canGetInRoom(r2));
-			dungeon.executeCommand("n");
-			assertTrue(dungeon.player.getCurrentRoom() == r2);
-			dungeon.executeCommand("s");
-			assertTrue(dungeon.player.getCurrentRoom() == r1);
-		} catch (UnknowRoomTypeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		r1 = RoomFactory.generateRoom( dungeon.getRooms());
+		r2 = RoomFactory.generateRoom( dungeon.getRooms());
+		RoomFactory.connectRoom(r1, Direction.NORTH, r2);
+		dungeon.setEntrance(r1);
+		// init player in room 1
+		dungeon.initPlayer();
+		assertTrue(dungeon.player.getCurrentRoom() == r1);
+		assertTrue(dungeon.player.canGetInRoom(r2));
+		dungeon.executeCommand("n");
+		assertTrue(dungeon.player.getCurrentRoom() == r2);
+		dungeon.executeCommand("s");
+		assertTrue(dungeon.player.getCurrentRoom() == r1);
 	}
 
 	@org.junit.Test
 	public void testPlayerOpenDoor() {
 		Dungeon dungeon = new Dungeon();
 		Room r1, r2;
-		try {
-			r1 = RoomFactory.generateRoom("Normal", dungeon.getRooms());
-			r2 = RoomFactory.generateRoom("Normal", dungeon.getRooms());
-			r2.setLocked(true);
-			RoomFactory.connectRoom(r1, Direction.EAST, r2);
-			dungeon.initPlayer();
-			assertFalse(dungeon.player.canGetInRoom(r2));
-			dungeon.player.addkey(new Key(2));
-			assertTrue(dungeon.player.canGetInRoom(r2));
+		r1 = RoomFactory.generateRoom( dungeon.getRooms());
+		r2 = RoomFactory.generateRoom( dungeon.getRooms());
+		r2.setLocked(true);
+		RoomFactory.connectRoom(r1, Direction.EAST, r2);
+		dungeon.initPlayer();
+		assertFalse(dungeon.player.canGetInRoom(r2));
+		dungeon.player.addkey(new Key(2));
+		assertTrue(dungeon.player.canGetInRoom(r2));
 
-		} catch (UnknowRoomTypeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
-	@org.junit.Test(expected = UnknowRoomTypeException.class)
-	public void testRoomFactoryExceptions() throws UnknowRoomTypeException {
-		RoomFactory.generateRoom("kjdfse", new ArrayList<Room>());
-	}
 
 	@org.junit.Test
 	public void testRoomFactory() throws UnknowRoomTypeException {
-		Room r = RoomFactory.generateRoom("Normal", new ArrayList<Room>());
+		Room r = RoomFactory.generateRoom( new ArrayList<Room>());
 		boolean isNormal = false;
 		if (r instanceof Room) {
 			isNormal = true;
 		}
 		assertTrue(isNormal);
 
-		Room r1 = RoomFactory.generateRoom("Enigma", new ArrayList<Room>());
+		Room r1 = RoomFactory.generateEnigmaRoom( new ArrayList<Room>());
 		boolean isEnigma = false;
 		if (r1 instanceof EnigmaRoom) {
 			isEnigma = true;
 		}
 		assertTrue(isEnigma);
 
-		Room r2 = RoomFactory.generateRoom("Arakne", new ArrayList<Room>());
+		Room r2 = RoomFactory.generateMonsterRoom(new ArrayList<Room>(), new Arakne());
 		boolean isMonster = false;
 		if (r2 instanceof MonsterRoom) {
 			isMonster = true;
 		}
 		assertTrue(isMonster);
 
-		r2 = RoomFactory.generateRoom("Glouton", new ArrayList<Room>());
+		r2 = RoomFactory.generateMonsterRoom(new ArrayList<Room>(), new Glouton());
 		isMonster = false;
 		if (r2 instanceof MonsterRoom) {
 			isMonster = true;
 		}
 		assertTrue(isMonster);
 
-		Room r3 = RoomFactory.generateRoom("Exit", new ArrayList<Room>());
+		Room r3 = RoomFactory.generateExitRoom(new ArrayList<Room>());
 		boolean isExit = false;
 		if ((r3 instanceof Room) && r3.isExit()) {
 			isExit = true;
 		}
 		assertTrue(isExit);
 
-		Room r4 = RoomFactory.generateRoom("Entrance", new ArrayList<Room>());
+		Room r4 = RoomFactory.generateEntranceRoom(new ArrayList<Room>());
 		boolean isEntrance = false;
 		if ((r4 instanceof Room) && r4.isEntrance()) {
 			isEntrance = true;
 		}
 		assertTrue(isEntrance);
 
-		Room r5 = RoomFactory.generateRoom("Trap", new ArrayList<Room>());
+		Room r5 = RoomFactory.generateTrapRoom(new ArrayList<Room>());
 		boolean isTrap = false;
 		if (r5 instanceof TrapRoom) {
 			isTrap = true;
