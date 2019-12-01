@@ -21,11 +21,9 @@ public class RandomGenerate {
 		ArrayList<Room> rooms = new ArrayList<Room>();
 		generateLinearDj(size,rooms);
 		generateLabyPath(size/2,rooms);
-		//		generateExitKey(rooms);
 		generateKey(rooms);
 		return rooms;
 	}
-
 
 
 	private static ArrayList<Room> getLockedRoom(ArrayList<Room> rooms) {
@@ -38,10 +36,10 @@ public class RandomGenerate {
 	}
 
 
-	public static void getFirstRoomLockedFrom(Room r, ArrayList<Room> list, ArrayList<Room> parcours){	
-		parcours.add(r);
+	public static void getFirstRoomLockedFrom(Room room, ArrayList<Room> list, ArrayList<Room> parcours){	
+		parcours.add(room);
 		if(list.isEmpty()){
-			for(Entry<Direction, Room> entry : r.neighbors.entrySet()) {
+			for(Entry<Direction, Room> entry : room.neighbors.entrySet()) {
 				Room next = entry.getValue();
 				if(next.isLocked())
 					list.add(next);
@@ -53,11 +51,10 @@ public class RandomGenerate {
 
 	}
 
-	public static void getConnectedRoom(Room r, ArrayList<Room> list){
+	public static void getConnectedRoom(Room room, ArrayList<Room> list){
 
-		for(Entry<Direction, Room> entry : r.neighbors.entrySet()) {
+		for(Entry<Direction, Room> entry : room.neighbors.entrySet()) {
 			Room current = entry.getValue();
-
 			if(!list.contains(current) && !current.isLocked() ){
 				list.add(current);
 				getConnectedRoom(current, list);

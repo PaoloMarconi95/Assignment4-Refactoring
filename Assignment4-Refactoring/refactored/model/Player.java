@@ -17,8 +17,8 @@ public class Player {
 	public static int default_health = 100;
 	
 	private int health;
-	private Torch t = new Torch();
-	private Weapon wp = new Fist();
+	private Torch torch = new Torch();
+	private Weapon weapon = new Fist();
 	private ArrayList<HealPotion> support = new ArrayList<>();
 	private ArrayList<Key> keyring = new ArrayList<>();
 
@@ -101,10 +101,10 @@ public class Player {
 		return currentRoom;
 	}
 
-	public void setCurrentRoom(Room r){
+	public void setCurrentRoom(Room actual_room){
 		if(currentRoom != null)
 			setPreviousRoom(currentRoom);
-		currentRoom = r;
+		currentRoom = actual_room;
 	}
 
 	public Room getPreviousRoom() {
@@ -120,19 +120,19 @@ public class Player {
 	}
 
 	public Weapon getWeapon() {
-		return wp;
+		return weapon;
 	}
 
 	public void setWeapon(Weapon wp) {
-		this.wp = wp;
+		this.weapon = wp;
 	}
 	
 	public Torch getTorch() {
-		return t;
+		return torch;
 	}
 
 	public void setT(Torch t) {
-		this.t = t;
+		this.torch = t;
 	}
 	public int getHealth() {
 		return health;
@@ -142,10 +142,10 @@ public class Player {
 	}
 
 	public void useTorch() {
-		if(t.empty()){
+		if(torch.empty()){
 			System.out.println("Your torch is extinguished");
 		} else {
-			t.use();
+			torch.use();
 			printDirections();
 		}
 	}
@@ -170,7 +170,7 @@ public class Player {
 		for(Key k : keyring){
 			System.out.println("Key n."+k.ROOM_NUMBER);
 		}
-		System.out.println("Current weapon : "+wp.getName()+" ("+wp.getPower()+" power)");
+		System.out.println("Current weapon : "+weapon.getName()+" ("+weapon.getPower()+" power)");
 	}
 
 }
