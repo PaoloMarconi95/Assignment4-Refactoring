@@ -152,28 +152,29 @@ public class Room {
 	public String toString(){
 		String s;
 		s="Room : "+number;
-		if(neighbors.get(Direction.NORTH) != null){
-			s+= " NORTH : "+ getNextRoom(Direction.NORTH).number;
-		}
-		if(neighbors.get(Direction.EAST) != null){
-			s+= " EAST : "+ getNextRoom(Direction.EAST).number;
-		}
-		if(neighbors.get(Direction.SOUTH) != null){
-			s+= " SOUTH : "+ getNextRoom(Direction.SOUTH).number;
-		}
-		if(neighbors.get(Direction.WEST) != null){
-			s+= " WEST : "+ getNextRoom(Direction.WEST).number;
-		}
-		if(isLocked())
-			s+= " LOCKED";
-		else
-			s+= " UNLOCKED";
-		if(key != null)
-			s+=" key n."+key.ROOM_NUMBER;
-		else
-			s+=" no key";
+		s = checkIfLocked();
+        s = checkHasKey();
+		System.out.println(s);
 		return s;
 	}
+
+	private String checkHasKey(){
+	    String s = "";
+        if(key != null)
+            s+=" key n."+key.ROOM_NUMBER;
+        else
+            s+=" no key";
+        return s;
+    }
+
+	private String checkIfLocked(){
+	    String s = "";
+        if(isLocked())
+            s+= " LOCKED";
+        else
+            s+= " UNLOCKED";
+        return s;
+    }
 
 	public int getNeighborsCount(){
 		return neighbors.size();
