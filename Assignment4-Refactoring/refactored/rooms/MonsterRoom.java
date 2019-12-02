@@ -3,6 +3,7 @@ package rooms;
 import java.util.Scanner;
 
 import model.Player;
+import model.Randomizer;
 import monsters.Monster;
 
 
@@ -69,7 +70,7 @@ public class MonsterRoom extends Room {
 							+ " damages");
 				}
 			} else if (choice == 2) {
-				if ((Math.random() * 101) > 85) {
+				if (Randomizer.random.nextInt(101) > 85) {
 					System.out.println("Successful dodge !");
 					System.out.println("You make " + p.hit(monster)
 					+ " damages to the monster");
@@ -79,7 +80,7 @@ public class MonsterRoom extends Room {
 							+ monster.hit(p) + " damages");
 				}
 			} else if (choice == 3) {
-				if ((Math.random() * 101) > 70) {
+				if (Randomizer.random.nextInt(101) > 70) {
 					escaped = true;
 					System.out.println("You escaped from the monster and you ran back to the previous room");
 					p.setCurrentRoom(p.getPreviousRoom());

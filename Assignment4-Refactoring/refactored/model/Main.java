@@ -40,7 +40,6 @@ public class Main {
 				else {
 					dungeon = new Dungeon("dj" + i + ".txt");
 				}
-				System.out.println("Dungeon number " + (i - 3));
 				while (!dungeon.isGameOver()) {
 					dungeon.update();
 				}

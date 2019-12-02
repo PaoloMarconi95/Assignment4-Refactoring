@@ -1,6 +1,7 @@
 package monsters;
 
 import model.Player;
+import model.Randomizer;
 
 public abstract class Monster {
 	private int health;
@@ -31,8 +32,8 @@ public abstract class Monster {
 
 	public int hit(Player p) {
 		int dmg = power;
-		int alea = (int)(Math.random()*21) * power / 100;
-		dmg += Math.random()*101 > 50 ?	alea : -alea;
+		int alea = Randomizer.random.nextInt(21) * power / 100;
+		dmg += Randomizer.random.nextInt(101) > 50 ?	alea : -alea;
 		p.setHealth(p.getHealth() - dmg);
 		return dmg;
 	}

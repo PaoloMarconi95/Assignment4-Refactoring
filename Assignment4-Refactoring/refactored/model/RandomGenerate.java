@@ -160,7 +160,7 @@ public class RandomGenerate {
 				}
 				else
 					newRoom = RoomFactory.generateRandomRoom(rooms);
-				if(Math.random()*101<20)
+				if(Randomizer.random.nextInt(101) < 20)
 					newRoom.setLocked(true);
 
 				RoomFactory.connectRoom(current, dir, newRoom);
@@ -200,7 +200,7 @@ public class RandomGenerate {
 		exit.setLocked(true);
 		Room beforeExit;
 
-		beforeExit = Math.random()*101 > 50 ? 	RoomFactory.generateRoom(rooms) :
+		beforeExit = Randomizer.random.nextInt(101) > 50 ? 	RoomFactory.generateRoom(rooms) :
 			RoomFactory.generateMonsterRoom(rooms, new Glouton());
 
 		RoomFactory.connectRoom(exit, Direction.getRandomDirection(), beforeExit);

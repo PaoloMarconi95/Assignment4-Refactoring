@@ -7,6 +7,7 @@ import items.weapons.*;
 import items.HealPotion;
 import model.GenerateFromFile;
 import model.Player;
+import model.Randomizer;
 
 
 public class EnigmaRoom extends Room {
@@ -31,7 +32,7 @@ public class EnigmaRoom extends Room {
 	 * @return a random question in the liste questions
 	 */
 	private Question getRandomQuestion(ArrayList<Question> questions) {
-		int alea = (int) (Math.random() * questions.size());
+		int alea = Randomizer.random.nextInt(questions.size());
 		return questions.get(alea);
 	}
 
@@ -71,7 +72,7 @@ public class EnigmaRoom extends Room {
 
 	public void giveRandomWeapon(Player p) {
 		Weapon wp;
-		int alea = (int) (Math.random()*101);
+		int alea = Randomizer.random.nextInt(101);
 		if(alea < 30)
 			wp = new Baton();
 		else if(alea < 75)

@@ -20,6 +20,7 @@ import model.Dungeon;
 import model.GenerateFromFile;
 import model.Player;
 import model.RandomGenerate;
+import model.Randomizer;
 import monsters.Arakne;
 import monsters.Glouton;
 import monsters.Monster;
@@ -431,7 +432,7 @@ public class Test {
 	public void testLineardungeonConnection() {
 		for (int i = 0; i < 10; i++) {
 			ArrayList<Room> rooms = new ArrayList<>();
-			RandomGenerate.generateLinearDj((int) ((Math.random() * 22) + 4), rooms);
+			RandomGenerate.generateLinearDj(Randomizer.random.nextInt(22) + 4, rooms);
 			assertTrue(rooms.get(0).getNeighborsCount() == 1);
 			for (int j = 1; j < (rooms.size() - 1); j++) {
 				assertEquals(rooms.get(j).getNeighborsCount(), 2);

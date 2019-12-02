@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import exceptions.UnknowRoomTypeException;
 import model.Direction;
+import model.Randomizer;
 import monsters.*;
 
 
@@ -11,7 +12,7 @@ public class RoomFactory {
 
 			
 	public static Room generateRandomRoom(ArrayList<Room> rooms) throws UnknowRoomTypeException{
-		int alea = (int) (Math.random() * 101);
+		int alea = Randomizer.random.nextInt(101);
 		Room room;
 		if(alea < 15)
 			room = RoomFactory.generateTrapRoom(rooms);
@@ -21,9 +22,9 @@ public class RoomFactory {
 		room = generateRandomMonsterRoom(rooms);
 		else
 			room = RoomFactory.generateRoom(rooms);
-		if(Math.random()*101 > 65)
+		if(Randomizer.random.nextInt(101) > 65)
 			room.setHasTorch(true);
-		if(Math.random()*101 > 85)
+		if(Randomizer.random.nextInt(101) > 85)
 			room.setHasPotion(true);
 		return room;
 	}
@@ -128,7 +129,7 @@ public class RoomFactory {
 
 
 	public static Room generateRandomMonsterRoom(ArrayList<Room> rooms) {
-		int alea = (int) (Math.random() * 101);
+		int alea = Randomizer.random.nextInt(101);
 		if(alea < 30)
 			return RoomFactory.generateMonsterRoom(rooms, new Glouton());
 		else if(alea < 55)

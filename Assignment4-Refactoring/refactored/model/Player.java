@@ -34,7 +34,7 @@ public class Player {
 	public int hit(Monster monster){
 		int damage = this.getWeapon().getPower();
 		int alea = Randomizer.random.nextInt(21) * this.getWeapon().getPower() / 100;
-		if(Math.random()*101 <= 50) {
+		if(Randomizer.random.nextInt(101) <= 50) {
 			alea = -alea;
 		}
 		monster.setHealth(monster.getHealth() - (damage + alea) );
