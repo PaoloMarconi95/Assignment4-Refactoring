@@ -3,12 +3,8 @@ package rooms;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import items.weapons.Baton;
+import items.weapons.*;
 import items.HealPotion;
-import items.weapons.Mace;
-import items.weapons.Spike;
-import items.weapons.Sword;
-import items.weapons.Weapon;
 import model.GenerateFromFile;
 import model.Player;
 
@@ -16,7 +12,6 @@ import model.Player;
 public class EnigmaRoom extends Room {
 
 	private Scanner	sc = new Scanner(System.in);
-	private int rep;
 	private Question question;
 	private boolean answered = false;
 
@@ -47,7 +42,7 @@ public class EnigmaRoom extends Room {
 			System.out.println("Welcome to the sphinx room, answering my question"
 					+ " and you will get a sublime reward, fail and you will suffer my wrath");
 			question.ask();
-			rep = getAnwser();
+			int rep = getAnwser();
 			if(question.isCorrectAnswer(rep)){
 				System.out.println("Congratulation you can pass !");
 				answered = true;

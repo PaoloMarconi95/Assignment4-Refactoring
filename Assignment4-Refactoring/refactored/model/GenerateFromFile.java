@@ -13,7 +13,7 @@ import rooms.RoomFactory;
 public class GenerateFromFile {
 
 	public static ArrayList<Room> generateDjFromFile(File f) {
-		ArrayList<Room> rooms_to_set = new ArrayList<Room>();
+		ArrayList<Room> rooms_to_set = new ArrayList<>();
 		FileParser fp = new FileParser(f);
 		ArrayList<String[]> rooms_from_file = fp.parseLines(" +");
 		createRooms(rooms_from_file, rooms_to_set);  // create all the rooms

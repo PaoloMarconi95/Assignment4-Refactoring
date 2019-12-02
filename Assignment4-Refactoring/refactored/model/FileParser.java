@@ -10,7 +10,7 @@ import java.util.List;
 
 public class FileParser {
 
-	List<String> allLine = new ArrayList<String>();
+	List<String> allLine = new ArrayList<>();
 
 
 	FileParser(File file) {

@@ -38,10 +38,10 @@ public class Test {
 	
 	@org.junit.Test
 	public void testGetFirstLockedRoom() throws UnknowRoomTypeException{
-		ArrayList<Room> list = new ArrayList<Room>();
+		ArrayList<Room> list = new ArrayList<>();
 		
-		ArrayList<Room> locked = new ArrayList<Room>();
-		ArrayList<Room> parcours = new ArrayList<Room>();
+		ArrayList<Room> locked = new ArrayList<>();
+		ArrayList<Room> parcours = new ArrayList<>();
 		
 		Room r2 = RoomFactory.generateRoom(list);
 		Room r3 = RoomFactory.generateRoom(list);
@@ -75,7 +75,6 @@ public class Test {
 	public void testdungeonRandomInit() throws DungeonTooSmallException,
 	MissingExitRoomException, MissingEntranceRoomException {
 		for(int i = 4; i < 20; i++){
-			System.out.println("ciao");
 			Dungeon dungeon = new Dungeon(7);
 			assertTrue(dungeon.getExit() != null);
 			assertTrue(dungeon.getEntrance() != null);
@@ -289,49 +288,49 @@ public class Test {
 
 	@org.junit.Test
 	public void testRoomFactory() throws UnknowRoomTypeException {
-		Room r = RoomFactory.generateRoom( new ArrayList<Room>());
+		Room r = RoomFactory.generateRoom( new ArrayList<>());
 		boolean isNormal = false;
 		if (r instanceof Room) {
 			isNormal = true;
 		}
 		assertTrue(isNormal);
 
-		Room r1 = RoomFactory.generateEnigmaRoom( new ArrayList<Room>());
+		Room r1 = RoomFactory.generateEnigmaRoom( new ArrayList<>());
 		boolean isEnigma = false;
 		if (r1 instanceof EnigmaRoom) {
 			isEnigma = true;
 		}
 		assertTrue(isEnigma);
 
-		Room r2 = RoomFactory.generateMonsterRoom(new ArrayList<Room>(), new Arakne());
+		Room r2 = RoomFactory.generateMonsterRoom(new ArrayList<>(), new Arakne());
 		boolean isMonster = false;
 		if (r2 instanceof MonsterRoom) {
 			isMonster = true;
 		}
 		assertTrue(isMonster);
 
-		r2 = RoomFactory.generateMonsterRoom(new ArrayList<Room>(), new Glouton());
+		r2 = RoomFactory.generateMonsterRoom(new ArrayList<>(), new Glouton());
 		isMonster = false;
 		if (r2 instanceof MonsterRoom) {
 			isMonster = true;
 		}
 		assertTrue(isMonster);
 
-		Room r3 = RoomFactory.generateExitRoom(new ArrayList<Room>());
+		Room r3 = RoomFactory.generateExitRoom(new ArrayList<>());
 		boolean isExit = false;
 		if ((r3 instanceof Room) && r3.isExit()) {
 			isExit = true;
 		}
 		assertTrue(isExit);
 
-		Room r4 = RoomFactory.generateEntranceRoom(new ArrayList<Room>());
+		Room r4 = RoomFactory.generateEntranceRoom(new ArrayList<>());
 		boolean isEntrance = false;
 		if ((r4 instanceof Room) && r4.isEntrance()) {
 			isEntrance = true;
 		}
 		assertTrue(isEntrance);
 
-		Room r5 = RoomFactory.generateTrapRoom(new ArrayList<Room>());
+		Room r5 = RoomFactory.generateTrapRoom(new ArrayList<>());
 		boolean isTrap = false;
 		if (r5 instanceof TrapRoom) {
 			isTrap = true;
@@ -415,15 +414,15 @@ public class Test {
 
 	@org.junit.Test
 	public void testRandomdungeonSize() {
-		ArrayList<Room> rooms = new ArrayList<Room>();
+		ArrayList<Room> rooms = new ArrayList<>();
 		RandomGenerate.generateLinearDj(4, rooms);
 		assertEquals(rooms.size(), 4);
 
-		ArrayList<Room> rooms2 = new ArrayList<Room>();
+		ArrayList<Room> rooms2 = new ArrayList<>();
 		RandomGenerate.generateLinearDj(12, rooms2);
 		assertEquals(rooms2.size(), 12);
 
-		ArrayList<Room> rooms3 = new ArrayList<Room>();
+		ArrayList<Room> rooms3 = new ArrayList<>();
 		RandomGenerate.generateLinearDj(47, rooms3);
 		assertEquals(rooms3.size(), 47);
 	}
@@ -431,7 +430,7 @@ public class Test {
 	@org.junit.Test
 	public void testLineardungeonConnection() {
 		for (int i = 0; i < 10; i++) {
-			ArrayList<Room> rooms = new ArrayList<Room>();
+			ArrayList<Room> rooms = new ArrayList<>();
 			RandomGenerate.generateLinearDj((int) ((Math.random() * 22) + 4), rooms);
 			assertTrue(rooms.get(0).getNeighborsCount() == 1);
 			for (int j = 1; j < (rooms.size() - 1); j++) {

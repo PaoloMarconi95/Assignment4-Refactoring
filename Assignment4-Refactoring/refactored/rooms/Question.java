@@ -7,7 +7,7 @@ public class Question {
 
 	private String question;
 	private String correctAnswer;
-	private ArrayList<String> possibleAnswer = new ArrayList<String>();
+	private ArrayList<String> possibleAnswer = new ArrayList<>();
 
 
 	public Question(String q, String a, String a2){
@@ -24,7 +24,7 @@ public class Question {
 		System.out.println("Choose the number of the correct answer");
 		Collections.shuffle(possibleAnswer);
 		for(int i = 0; i < possibleAnswer.size(); i++){
-			System.out.println("Answer n°"+(i+1)+" : "+possibleAnswer.get(i));
+			System.out.println("Answer nï¿½"+(i+1)+" : "+possibleAnswer.get(i));
 		}
 	}
 

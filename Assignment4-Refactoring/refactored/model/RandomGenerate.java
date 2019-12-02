@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Collections;
 import java.util.Map.Entry;
 
@@ -12,11 +13,13 @@ import rooms.Room;
 import rooms.RoomFactory;
 
 public class RandomGenerate {
+	
+	private static final Random random = new Random();
 
 	public static ArrayList<Room> generate(int size) throws DungeonTooSmallException{
 		if(size<4)
 			throw new DungeonTooSmallException();
-		ArrayList<Room> rooms = new ArrayList<Room>();
+		ArrayList<Room> rooms = new ArrayList<>();
 		generateLinearDj(size,rooms);
 		generateLabyPath(size/2,rooms);
 		generateKey(rooms);
@@ -25,7 +28,7 @@ public class RandomGenerate {
 
 
 	private static ArrayList<Room> getLockedRoom(ArrayList<Room> rooms) {
-		ArrayList<Room> roomlist = new ArrayList<Room>();
+		ArrayList<Room> roomlist = new ArrayList<>();
 		for (Room room : rooms) {
 			if(room.isLocked())
 				roomlist.add(room);
@@ -64,13 +67,13 @@ public class RandomGenerate {
 	
 	private static void generateKey(ArrayList<Room> rooms) {
 
-		ArrayList<Room> list = new ArrayList<Room>();
+		ArrayList<Room> list = new ArrayList<>();
 		ArrayList<Room> roomsLocked = getLockedRoom(rooms);
 		Room entrance = rooms.get(getEntranceRoomNumber(rooms));
 		Room exit = rooms.get(getExitRoomNumber(roomsLocked)); 
 
-		ArrayList<Room> parcours = new ArrayList<Room>();
-		ArrayList<Room> oneRoom = new ArrayList<Room>();
+		ArrayList<Room> parcours = new ArrayList<>();
+		ArrayList<Room> oneRoom = new ArrayList<>();
 		RandomGenerate.getFirstRoomLockedFrom(entrance, oneRoom, parcours);
 		Room locked;
 		boolean impossible = false;
@@ -91,9 +94,9 @@ public class RandomGenerate {
 				break;
 			}
 
-			int alea = (int) (Math.random()*list.size());
+			int alea = random.nextInt(list.size());
 			while(list.get(alea).getKey() != null && (list.get(alea)!= exit) ){
-				alea = (int) (Math.random()*list.size());
+				alea = random.nextInt(list.size());
 			}
 
 			list.get(alea).setKey(k);
@@ -128,7 +131,7 @@ public class RandomGenerate {
 	
 
 	private static void extendDj(ArrayList<Room> rooms, int i) {
-		ArrayList<Room> toExtends = new ArrayList<Room>();
+		ArrayList<Room> toExtends = new ArrayList<>();
 		boolean monster = false;
 		boolean sphinx = false;
 		Collections.shuffle(rooms);

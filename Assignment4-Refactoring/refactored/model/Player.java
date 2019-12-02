@@ -1,5 +1,6 @@
 package model;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Map;
 
 import items.Torch;
@@ -15,6 +16,7 @@ import rooms.Room;
 public class Player {
 	
 	public static final int default_health = 100;
+	public static final Random random = new Random();
 	
 	private int health;
 	private Torch torch = new Torch();
@@ -33,7 +35,7 @@ public class Player {
 
 	public int hit(Monster monster){
 		int damage = this.getWeapon().getPower();
-		int alea = (int) ((Math.random()*21) * this.getWeapon().getPower() / 100);
+		int alea = (int) (random.nextInt(21) * this.getWeapon().getPower() / 100);
 		if(Math.random()*101 <= 50) {
 			alea = -alea;
 		}
