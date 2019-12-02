@@ -65,7 +65,8 @@ public class MonsterRoom extends Room {
 			} else if (choice == 2) {
 				dodge(p);
 			} else if (choice == 3) {
-				escape(p, escaped);
+				escape(p);
+				escaped = true;
 			}
 		}
 		if (p.getHealth() <= 0) 
@@ -101,9 +102,8 @@ public class MonsterRoom extends Room {
 		}
 	}
 
-	private void escape(Player p, boolean escaped){
+	private void escape(Player p){
 		if (Randomizer.random.nextInt(101) > 70) {
-			escaped = true;
 			System.out.println("You escaped from the monster and you ran back to the previous room");
 			p.setCurrentRoom(p.getPreviousRoom());
 		} else {
