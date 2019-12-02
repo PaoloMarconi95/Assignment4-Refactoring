@@ -17,8 +17,8 @@ public class Player {
 	public static final int default_health = 100;
 	
 	private int health;
-	private Torch torch = new Torch();
-	private Weapon weapon = new Fist();
+	private Torch torch;
+	private Weapon weapon;
 	private ArrayList<HealPotion> support = new ArrayList<>();
 	private ArrayList<Key> keyring = new ArrayList<>();
 
@@ -29,6 +29,8 @@ public class Player {
 	public Player(){
 		this.health = default_health;
 		this.support.add(new HealPotion());
+		this.torch = new Torch();
+		this.weapon = new Fist();
 	}
 
 	public int hit(Monster monster){
@@ -62,36 +64,30 @@ public class Player {
 	}
 
 	private boolean fullHealth(){
-		if(health < 100)
-			return false;
-		else
-			return true;
+		return health >= 100;
 	}
 
 	private boolean hasHealPotions(){
-		if(support.isEmpty())
-			return false;
-		else
-			return true;
+		return support.isEmpty();
 	}
 
 
-	public boolean hasKeyForRoom(Room r){
+	public boolean hasKeyForRoom(Room room){
 		for(Key key : keyring){
-			if(r.getNumber() == key.ROOM_NUMBER)
+			if(room.getNumber() == key.ROOM_NUMBER)
 				return true;
 		}
 		return false;
 	}
 
-	public void addkey(Key k){
-		keyring.add(k);
+	public void addkey(Key key){
+		keyring.add(key);
 	}
 
-	public boolean canGetInRoom(Room r){
-		if(!r.isLocked())
+	public boolean canGetInRoom(Room room){
+		if(!room.isLocked())
 			return true;
-		else if(hasKeyForRoom(r))
+		else if(hasKeyForRoom(room))
 			return true;
 		return false;
 	}
@@ -123,16 +119,16 @@ public class Player {
 		return weapon;
 	}
 
-	public void setWeapon(Weapon wp) {
-		this.weapon = wp;
+	public void setWeapon(Weapon weapon) {
+		this.weapon = weapon;
 	}
 	
 	public Torch getTorch() {
 		return torch;
 	}
 
-	public void setT(Torch t) {
-		this.torch = t;
+	public void setT(Torch torch) {
+		this.torch = torch;
 	}
 	public int getHealth() {
 		return health;
@@ -165,12 +161,12 @@ public class Player {
 	}
 
 	public void displayInventory() {
-		System.out.println("Health potion : "+support.size());
-		System.out.println("Keyring : "+keyring.size()+" key");
-		for(Key k : keyring){
-			System.out.println("Key n."+k.ROOM_NUMBER);
+		System.out.println("Health potion : " + support.size());
+		System.out.println("Keyring : " + keyring.size() + " key");
+		for(Key key : keyring){
+			System.out.println("Key n." + key.ROOM_NUMBER);
 		}
-		System.out.println("Current weapon : "+weapon.getName()+" ("+weapon.getPower()+" power)");
+		System.out.println("Current weapon : "+ weapon.getName()+ " ("+ weapon.getPower()+ " power)");
 	}
 
 }
