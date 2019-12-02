@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Collections;
 import java.util.Map.Entry;
 
@@ -13,8 +12,6 @@ import rooms.Room;
 import rooms.RoomFactory;
 
 public class RandomGenerate {
-	
-	private static final Random random = new Random();
 
 	public static ArrayList<Room> generate(int size) throws DungeonTooSmallException{
 		if(size<4)
@@ -94,9 +91,9 @@ public class RandomGenerate {
 				break;
 			}
 
-			int alea = random.nextInt(list.size());
+			int alea = Randomizer.random.nextInt(list.size());
 			while(list.get(alea).getKey() != null && (list.get(alea)!= exit) ){
-				alea = random.nextInt(list.size());
+				alea = Randomizer.random.nextInt(list.size());
 			}
 
 			list.get(alea).setKey(k);
