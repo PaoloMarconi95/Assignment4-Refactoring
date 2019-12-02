@@ -176,16 +176,7 @@ public class Room {
 	}
 
 	public int getNeighborsCount(){
-		int i = 0;
-		if(neighbors.containsKey(Direction.NORTH))
-			i++;
-		if (neighbors.containsKey(Direction.EAST)) 
-			i++;
-		if (neighbors.containsKey(Direction.SOUTH)) 
-			i++;
-		if (neighbors.containsKey(Direction.WEST)) 
-			i++;
-		return i;
+		return neighbors.size();
 	}
 
 	public void setHasPotion(boolean hasPotion) {
