@@ -61,38 +61,13 @@ public class MonsterRoom extends Room {
 			displayInfos(p);
 			int choice = getAnwser();
 			if (choice == 1) {
-				int pdmg = p.hit(monster);
-				System.out.println("You make " + pdmg
-						+ " damages to the monster");
-				if (monster.isAlive()) {
-					int mdmg = monster.hit(p);
-					System.out.println("The monster makes you " + mdmg
-							+ " damages");
-				}
+				hitMonster(p);
 			} else if (choice == 2) {
-				if (Randomizer.random.nextInt(101) > 85) {
-					System.out.println("Successful dodge !");
-					System.out.println("You make " + p.hit(monster)
-					+ " damages to the monster");
-				} else {
-					System.out.println("You failed to dodge the monster attack");
-					System.out.println("The monster makes you "
-							+ monster.hit(p) + " damages");
-				}
+				dodge(p);
 			} else if (choice == 3) {
-				if (Randomizer.random.nextInt(101) > 70) {
-					escaped = true;
-					System.out.println("You escaped from the monster and you ran back to the previous room");
-					p.setCurrentRoom(p.getPreviousRoom());
-				} else {
-					System.out.println("You failed to escape from the monster");
-					System.out.println("The monster makes you "
-							+ monster.hit(p) + " damages");
-				}
-
+				escape(p, escaped);
 			}
 		}
-
 		if (p.getHealth() <= 0) 
 			System.out.println("You are dead ! Game Over...");
 		else if (!monster.isAlive()) {
@@ -101,6 +76,41 @@ public class MonsterRoom extends Room {
 			checkRoom(p);
 		}
 
+	}
+
+	private void hitMonster(Player p){
+		int pdmg = p.hit(monster);
+		System.out.println("You make " + pdmg
+				+ " damages to the monster");
+		if (monster.isAlive()) {
+			int mdmg = monster.hit(p);
+			System.out.println("The monster makes you " + mdmg
+					+ " damages");
+		}
+	}
+
+	private void dodge(Player p){
+		if (Randomizer.random.nextInt(101) > 85) {
+			System.out.println("Successful dodge !");
+			System.out.println("You make " + p.hit(monster)
+					+ " damages to the monster");
+		} else {
+			System.out.println("You failed to dodge the monster attack");
+			System.out.println("The monster makes you "
+					+ monster.hit(p) + " damages");
+		}
+	}
+
+	private void escape(Player p, boolean escaped){
+		if (Randomizer.random.nextInt(101) > 70) {
+			escaped = true;
+			System.out.println("You escaped from the monster and you ran back to the previous room");
+			p.setCurrentRoom(p.getPreviousRoom());
+		} else {
+			System.out.println("You failed to escape from the monster");
+			System.out.println("The monster makes you "
+					+ monster.hit(p) + " damages");
+		}
 	}
 
 	private void displayInfos(Player p) {
