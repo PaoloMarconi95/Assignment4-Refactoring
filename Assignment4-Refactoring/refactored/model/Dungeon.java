@@ -43,11 +43,11 @@ public class Dungeon {
 
 	private void initEntranceAndExit() throws MissingExitRoomException,
 	MissingEntranceRoomException {
-		for (Room r : rooms) {
-			if (r.isEntrance()) {
-				entrance = r;
-			} else if (r.isExit()) {
-				exit = r;
+		for (Room room : rooms) {
+			if (room.isEntrance()) {
+				entrance = room;
+			} else if (room.isExit()) {
+				exit = room;
 			}
 		}
 		if (exit == null)
